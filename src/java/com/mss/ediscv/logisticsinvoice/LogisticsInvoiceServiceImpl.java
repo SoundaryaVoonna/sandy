@@ -238,6 +238,8 @@ public class LogisticsInvoiceServiceImpl implements LogisticsInvoiceService {
             while (resultSet.next()) {
                 LogisticsInvoiceBean logisticsInvoiceBean = new LogisticsInvoiceBean();
                 logisticsInvoiceBean.setInstanceId(resultSet.getString("FILE_ID"));
+                logisticsInvoiceBean.setDirection(resultSet.getString("DIRECTION"));
+
                 if(resultSet.getString("DIRECTION").equalsIgnoreCase("INBOUND")){
                     logisticsInvoiceBean.setPartner(resultSet.getString("SENDER_NAME"));
                 }   
