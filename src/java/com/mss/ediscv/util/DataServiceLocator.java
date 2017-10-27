@@ -155,7 +155,8 @@ public class DataServiceLocator {
                                     
                                     dataSource = datasource;
                                  System.out.println("after else!!");
-                                    CacheManager.getCache().put(dataSourceName, datasource);	*/			
+                              */      CacheManager.getCache().put(dataSourceName, dataSource);				
+
 			}
 		} catch (Exception ex) {
 			throw new ServiceLocatorException(
