@@ -543,12 +543,16 @@
                                                 for (int i = strIntStartGrid, j = 0; i < strIntEndGrid; i++, j++) {
                                                     LtResponseBean ltResponseBean = (LtResponseBean) ltResponseList.get(i);
                                                   //  logisticsLoadBean = (LogisticsLoadBean) list.get(i);
-                                            %>
-
+                                                                                           
+if(ltResponseBean.getDirection().equalsIgnoreCase("INBOUND"))  {%>
 
                                             <tr>
-                                                <td>
+                                               <%}
+else{%><tr style="background:none;background: beige;"><%}if(ltResponseBean.getDirection().equalsIgnoreCase("INBOUND")){ %>
+                                                         <td>
+                                                             
                                                     <%
+}else{%><td style="background: none;"> <%}
                                                         if (ltResponseBean.getFileType() != null) {
                                                             out.println(ltResponseBean.getFileType());
                                                         } else {
@@ -564,8 +568,12 @@
                                                     </a>
                                             </td>--%>
 
-                                                <td>
+                                                <%if(ltResponseBean.getDirection().equalsIgnoreCase("INBOUND")){ %>
+                                                         <td>
+                                                             
                                                     <%
+}else{%><td style="background: none;"> <%}
+                                                    
                                                         if (ltResponseBean.getFileId() != null) {
                                                             out.println(ltResponseBean.getFileId());
                                                         } else {
@@ -575,7 +583,11 @@
 
                                                 </td>
 
-                                                <td><a href="javascript:getDetails('<%=ltResponseBean.getFileId()%>','<%=ltResponseBean.getRefId()%>');">
+                                                <%if(ltResponseBean.getDirection().equalsIgnoreCase("INBOUND")){ %>
+                                                         <td>
+                                                             
+                                                    <%
+}else{%><td style="background: none;"> <%}%><a href="javascript:getDetails('<%=ltResponseBean.getFileId()%>','<%=ltResponseBean.getRefId()%>');">
                                                         <%
                                                             if (ltResponseBean.getRefId() != null) {
                                                                 out.println(ltResponseBean.getRefId());
@@ -588,14 +600,19 @@
                                                     </a>     
                                                 </td>
 
-                                                <td>
-                                                    <%                                                                out.println(ltResponseBean.getDate_time_rec().toString().substring(0, ltResponseBean.getDate_time_rec().toString().lastIndexOf(":")));
+                                              <%if(ltResponseBean.getDirection().equalsIgnoreCase("INBOUND")){ %>
+                                                         <td>
+                                                             
+                                                    <%
+}else{%><td style="background: none;"> <%}                                                              out.println(ltResponseBean.getDate_time_rec().toString().substring(0, ltResponseBean.getDate_time_rec().toString().lastIndexOf(":")));
                                                     %>
 
                                                 </td>
-
-                                                <td>
-                                                    <%                                                            if (ltResponseBean.getShipmentId() != null) {
+<%if(ltResponseBean.getDirection().equalsIgnoreCase("INBOUND")){ %>
+                                                         <td>
+                                                             
+                                                    <%
+}else{%><td style="background: none;"> <%}                                                           if (ltResponseBean.getShipmentId() != null) {
                                                             out.println(ltResponseBean.getShipmentId());
                                                         } else {
                                                             out.println("-");
@@ -622,21 +639,30 @@
 
 
 
-                                                <td>
-                                                    <%                                                            out.println(ltResponseBean.getTransType());
+                                              <%if(ltResponseBean.getDirection().equalsIgnoreCase("INBOUND")){ %>
+                                                         <td>
+                                                             
+                                                    <%
+}else{%><td style="background: none;"> <%}                                                          out.println(ltResponseBean.getTransType());
                                                     %>
 
                                                 </td>
-                                                <td>
+                                             <%if(ltResponseBean.getDirection().equalsIgnoreCase("INBOUND")){ %>
+                                                         <td>
+                                                             
                                                     <%
+}else{%><td style="background: none;"> <%}
                                                         out.println(ltResponseBean.getDirection());
                                                     %>
 
                                                 </td>  
 
 
-                                                <td>
+                                            <%if(ltResponseBean.getDirection().equalsIgnoreCase("INBOUND")){ %>
+                                                         <td>
+                                                             
                                                     <%
+}else{%><td style="background: none;"> <%}
                                                         if (ltResponseBean.getStatus().equalsIgnoreCase("ERROR")) {
                                                             out.println("<font color='red'>" + ltResponseBean.getStatus() + "</font>");
                                                             //out.println("<a href='javascript:errorOverlay("+ltResponseBean.getId()+")'><font color='red'>" + ltResponseBean.getStatus() + "</font></a>");
@@ -650,8 +676,11 @@
 
                                                 </td>
 
-                                                <td>
-                                                    <%                                                            if (ltResponseBean.getResponseStatus() != null) {
+                                            <%if(ltResponseBean.getDirection().equalsIgnoreCase("INBOUND")){ %>
+                                                         <td>
+                                                             
+                                                    <%
+}else{%><td style="background: none;"> <%}                                                        if (ltResponseBean.getResponseStatus() != null) {
                                                             if (ltResponseBean.getResponseStatus().equalsIgnoreCase("A")) {
                                                                 out.println("ACCEPT");
                                                             } else if (ltResponseBean.getResponseStatus().equalsIgnoreCase("D")) {
@@ -670,8 +699,11 @@
 
                                                 </td> 
 
-                                                <td>
-                                                    <%                                                            if (ltResponseBean.getPartnerName() != null) {
+                                               <%if(ltResponseBean.getDirection().equalsIgnoreCase("INBOUND")){ %>
+                                                         <td>
+                                                             
+                                                    <%
+}else{%><td style="background: none;"> <%}                                                          if (ltResponseBean.getPartnerName() != null) {
                                                             out.println(ltResponseBean.getPartnerName());
                                                         } else {
                                                             out.println("-");
