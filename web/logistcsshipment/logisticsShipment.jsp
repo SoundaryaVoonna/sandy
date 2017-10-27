@@ -550,11 +550,16 @@
                                                 for (int i = strIntStartGrid, j = 0; i < strIntEndGrid; i++, j++) {
                                                     LtShipmentBean ltShipmentBean = (LtShipmentBean) ltShipmentList.get(i);
                                                   //  logisticsLoadBean = (LogisticsLoadBean) list.get(i);
-                                            %>
+                                                                                                                                   
+if(ltShipmentBean.getDirection().equalsIgnoreCase("INBOUND"))  {%>
+
                                             <tr>
-                                                <td>
+                                               <%}
+else{%><tr style="background:none;background: beige;"><%}if(ltShipmentBean.getDirection().equalsIgnoreCase("INBOUND")){ %>
+                                                         <td>
+                                                             
                                                     <%
-                                                        if (ltShipmentBean.getInstanceId() != null) {
+}else{%><td style="background: none;"> <%}               if (ltShipmentBean.getInstanceId() != null) {
                                                             out.println(ltShipmentBean.getInstanceId());
                                                         } else {
                                                             out.println("-");
@@ -568,7 +573,11 @@
                                                     %>
                                                    </a> 
                                                 </td>--%>
-                                                <td>  <a href="javascript:getDetails('<%=ltShipmentBean.getAsnNum()%>','<%=ltShipmentBean.getPoNum()%>','<%=ltShipmentBean.getId()%>');">
+                                              <%if(ltShipmentBean.getDirection().equalsIgnoreCase("INBOUND")){ %>
+                                                         <td>
+                                                             
+                                                    <%
+}else{%><td style="background: none;"> <%}%>  <a href="javascript:getDetails('<%=ltShipmentBean.getAsnNum()%>','<%=ltShipmentBean.getPoNum()%>','<%=ltShipmentBean.getId()%>');">
                                                         <%
                                                             if (ltShipmentBean.getAsnNum() != null) {
                                                                 out.println(ltShipmentBean.getAsnNum());
@@ -579,8 +588,11 @@
                                                     </a> 
                                                 </td>
 
-                                                <td>
+                                                <%if(ltShipmentBean.getDirection().equalsIgnoreCase("INBOUND")){ %>
+                                                         <td>
+                                                             
                                                     <%
+}else{%><td style="background: none;"> <%}
                                                         if (ltShipmentBean.getPartner() != null) {
                                                             out.println(ltShipmentBean.getPartner());
                                                         } else {
@@ -589,8 +601,11 @@
 
                                                     %>
                                                 </td>
-                                                <td>
-                                                    <%                                                            if (ltShipmentBean.getCarrierStatus() != null) {
+                                                   <%if(ltShipmentBean.getDirection().equalsIgnoreCase("INBOUND")){ %>
+                                                         <td>
+                                                             
+                                                    <%
+}else{%><td style="background: none;"> <%}                                                            if (ltShipmentBean.getCarrierStatus() != null) {
                                                             if (ltShipmentBean.getCarrierStatus().equalsIgnoreCase("AA")) {
                                                                 out.println(ltShipmentBean.getCarrierStatus() + "_pick_up appointment");
                                                             } else if (ltShipmentBean.getCarrierStatus().equalsIgnoreCase("AB")) {
@@ -639,8 +654,11 @@
                                                      } 
                                            %>
                                                 </td>  --%>
-                                                <td>
+                                                 <%if(ltShipmentBean.getDirection().equalsIgnoreCase("INBOUND")){ %>
+                                                         <td>
+                                                             
                                                     <%
+}else{%><td style="background: none;"> <%}
                                                         //  out.println(shipmentBean.getDate_time_rec());
                                                         out.println(ltShipmentBean.getDateTime().toString().substring(0, ltShipmentBean.getDateTime().toString().lastIndexOf(":")));
                                                     %>
@@ -661,13 +679,19 @@
                                               out.println(shipmentBean.getStCtrl());
                                               %>
                                                   </td>  --%>
-                                                <td>
+                                                   <%if(ltShipmentBean.getDirection().equalsIgnoreCase("INBOUND")){ %>
+                                                         <td>
+                                                             
                                                     <%
+}else{%><td style="background: none;"> <%}
                                                         out.println(ltShipmentBean.getDirection().toUpperCase());
                                                     %>
                                                 </td>
-                                                <td>
+                                                  <%if(ltShipmentBean.getDirection().equalsIgnoreCase("INBOUND")){ %>
+                                                         <td>
+                                                             
                                                     <%
+}else{%><td style="background: none;"> <%}
                                                         if (ltShipmentBean.getStatus() != null) {
                                                             if (ltShipmentBean.getStatus().equalsIgnoreCase("ERROR")) {
                                                                 out.println("<font color='red'>" + ltShipmentBean.getStatus() + "</font>");
@@ -683,8 +707,11 @@
                                                     %>
                                                 </td>
 
-                                                <td>
+                                                <%if(ltShipmentBean.getDirection().equalsIgnoreCase("INBOUND")){ %>
+                                                         <td>
+                                                             
                                                     <%
+}else{%><td style="background: none;"> <%}
                                                         if (ltShipmentBean.getStopNum() != null) {
                                                             out.println(ltShipmentBean.getStopNum());
                                                         } else {
@@ -692,8 +719,11 @@
                                                         }
                                                     %>
                                                 </td>
-                                                <td>
+                                                   <%if(ltShipmentBean.getDirection().equalsIgnoreCase("INBOUND")){ %>
+                                                         <td>
+                                                             
                                                     <%
+}else{%><td style="background: none;"> <%}
                                                         if (ltShipmentBean.getOrdernum() != null) {
 
                                                             out.println(ltShipmentBean.getOrdernum());
