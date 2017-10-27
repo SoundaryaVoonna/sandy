@@ -99,14 +99,14 @@
             }
         </script>
         <script type="text/javascript">
-            $(function () {
-                $('#attach_box').click(function () {
+            $(function() {
+                $('#attach_box').click(function() {
                     $('#sec_box').show();
                     return false;
                 });
             });
-            $(function () {
-                $('#detail_link').click(function () {
+            $(function() {
+                $('#detail_link').click(function() {
                     $('#detail_box').show();
                     return false;
                 });
@@ -115,7 +115,7 @@
             // New function to show the left grid
 
             function demo() {
-                $(function () {
+                $(function() {
 
                     $('#detail_box').show();
                     return false;
@@ -614,16 +614,28 @@
                                                     resultCount = searchResult.size();
                                                 }
 
+                                                String flag = null;
+
                                                 for (int i = strIntStartGrid, j = 0; i < strIntEndGrid; i++, j++) {
                                                     LogisticsDocBean logisticsDocBean = (LogisticsDocBean) searchResult.get(i);
 
-                                            %>
+                                                    if ((logisticsDocBean.getTransaction_type().equalsIgnoreCase("204") && logisticsDocBean.getDirection().equalsIgnoreCase("OUTBOUND")) || (logisticsDocBean.getTransaction_type().equalsIgnoreCase("210") && logisticsDocBean.getDirection().equalsIgnoreCase("INBOUND")) || (logisticsDocBean.getTransaction_type().equalsIgnoreCase("214") && logisticsDocBean.getDirection().equalsIgnoreCase("INBOUND")) || (logisticsDocBean.getTransaction_type().equalsIgnoreCase("990") && logisticsDocBean.getDirection().equalsIgnoreCase("INBOUND"))) {
+                                                        flag = "carrier";
+                                                    } else {
+                                                        flag = "customer";
+                                                    }
+
+                                                    if (flag.equals("carrier")) { %>
 
                                             <tr CLASS="gridRowEven">
                                                 <%--  <td><%=i + 1%></td>--%>
 
                                                 <td>
-                                                    <%                                                        if (logisticsDocBean.getFile_type() != null) {
+                                                    <%} else {
+                                                    %>
+                                            <tr style="background:none;background: beige;"> <td style="background: none;">
+                                                    <%}
+                                                        if (logisticsDocBean.getFile_type() != null) {
 
                                                             out.println(logisticsDocBean.getFile_type());
                                                         } else {
@@ -632,7 +644,15 @@
                                                     %>
 
                                                 </td>
-                                                <td><a href="javascript:getDetails('<%=logisticsDocBean.getFile_id()%>','<%=logisticsDocBean.getId()%>');">
+                                                <%if (flag.equals("carrier")) { %>
+
+                                                <%--  <td><%=i + 1%></td>--%>
+
+                                                <td>
+                                                    <%} else {
+                                                    %>
+                                                <td style="background: none;">
+                                                    <%}%><a href="javascript:getDetails('<%=logisticsDocBean.getFile_id()%>','<%=logisticsDocBean.getId()%>');">
                                                         <%
 
                                                             if (logisticsDocBean.getFile_id() != null) {
@@ -645,8 +665,16 @@
                                                         %>
                                                     </a>
                                                 </td>
+                                                <%if (flag.equals("carrier")) { %>
+
+                                                <%--  <td><%=i + 1%></td>--%>
+
                                                 <td>
-                                                    <%                                                        if (logisticsDocBean.getPname() != null) {
+                                                    <%} else {
+                                                    %>
+                                                <td style="background: none;">
+                                                    <%}
+                                                        if (logisticsDocBean.getPname() != null) {
                                                             out.println(logisticsDocBean.getPname());
                                                         } else {
                                                             out.println("-");
@@ -656,8 +684,16 @@
 
                                                 </td>
 
+                                                <%if (flag.equals("carrier")) { %>
+
+                                                <%--  <td><%=i + 1%></td>--%>
+
                                                 <td>
-                                                    <%                                                        if (logisticsDocBean.getShipmentId() != null) {
+                                                    <%} else {
+                                                    %>
+                                                <td style="background: none;">
+                                                    <%}
+                                                        if (logisticsDocBean.getShipmentId() != null) {
                                                             out.println(logisticsDocBean.getShipmentId());
                                                         } else {
                                                             out.println("-");
@@ -667,13 +703,28 @@
 
                                                 </td>
 
+                                                <%if (flag.equals("carrier")) { %>
+
+                                                <%--  <td><%=i + 1%></td>--%>
+
                                                 <td>
-                                                    <%                                                        out.println(logisticsDocBean.getDate_time_rec().toString().substring(0, logisticsDocBean.getDate_time_rec().toString().lastIndexOf(":")));
+                                                    <%} else {
+                                                    %>
+                                                <td style="background: none;">
+                                                    <%}
+                                                        out.println(logisticsDocBean.getDate_time_rec().toString().substring(0, logisticsDocBean.getDate_time_rec().toString().lastIndexOf(":")));
                                                     %>
 
                                                 </td>   
+                                                <%if (flag.equals("carrier")) { %>
+
+                                                <%--  <td><%=i + 1%></td>--%>
+
                                                 <td>
-                                                    <%
+                                                    <%} else {
+                                                    %>
+                                                <td style="background: none;">
+                                                    <%}
                                                         if (logisticsDocBean.getTransaction_type().equalsIgnoreCase("204")) {
 
                                                             out.println(logisticsDocBean.getTransaction_type() + "-LoadTender");
@@ -695,15 +746,30 @@
                                                     %>
 
                                                 </td>
+                                                <%if (flag.equals("carrier")) { %>
+
+                                                <%--  <td><%=i + 1%></td>--%>
+
                                                 <td>
-                                                    <%                                                        out.println(logisticsDocBean.getDirection());
+                                                    <%} else {
+                                                    %>
+                                                <td style="background: none;">
+                                                    <%}
+                                                        out.println(logisticsDocBean.getDirection());
                                                     %>
 
                                                 </td>  
 
 
+                                                <%if (flag.equals("carrier")) { %>
+
+                                                <%--  <td><%=i + 1%></td>--%>
+
                                                 <td>
-                                                    <%
+                                                    <%} else {
+                                                    %>
+                                                <td style="background: none;">
+                                                    <%}
                                                         if (logisticsDocBean.getStatus() != null) {
                                                             if (logisticsDocBean.getStatus().equalsIgnoreCase("ERROR")) {
 
@@ -721,8 +787,15 @@
 
                                                 </td>
 
+                                                <%if (flag.equals("carrier")) { %>
+
+                                                <%--  <td><%=i + 1%></td>--%>
+
                                                 <td>
-                                                    <%
+                                                    <%} else {
+                                                    %>
+                                                <td style="background: none;">
+                                                    <%}
                                                         if (logisticsDocBean.getTransaction_type().equalsIgnoreCase("214")) {
                                                             if (logisticsDocBean.getTransactionStatus() == null) {
                                                                 out.println("-");
@@ -791,22 +864,26 @@
                                                             // out.println(logisticsDocBean.getTransactionStatus());
                                                         }
 
-
                                                     %>
 
                                                 </td>
 
+                                                <%if (flag.equals("carrier")) { %>
+
+                                                <%--  <td><%=i + 1%></td>--%>
+
                                                 <td>
-                                                    <%                                                        if (logisticsDocBean.getOrdernum() != null) {
+                                                    <%} else {
+                                                    %>
+                                                <td style="background: none;">
+                                                    <%}
+                                                        if (logisticsDocBean.getOrdernum() != null) {
 
-             
-                                                                out.println(logisticsDocBean.getOrdernum());
+                                                            out.println(logisticsDocBean.getOrdernum());
 
-                                                            
-
-                                                        }else{
-                                                        out.println("-");
-                                                    }
+                                                        } else {
+                                                            out.println("-");
+                                                        }
                                                     %>
 
 
