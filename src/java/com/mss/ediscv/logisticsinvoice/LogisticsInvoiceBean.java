@@ -26,6 +26,9 @@ private Timestamp date_time_rec;
 private String tmwSenderid;
 private String tmwReceivererid;
 
+private String direction;
+
+
     public String getTmwReceivererid() {
         return tmwReceivererid;
     }
@@ -209,5 +212,15 @@ private String shipmentId;
     public void setDate_time_rec(Timestamp date_time_rec) {
         this.date_time_rec = date_time_rec;
     }
-   
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+ 
+    
+
 }
