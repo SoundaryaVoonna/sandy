@@ -563,23 +563,39 @@
                                                 for (int i = strIntStartGrid, j = 0; i < strIntEndGrid; i++, j++) {
                                                     LogisticsLoadBean logisticsLoadBean = (LogisticsLoadBean) loadList.get(i);
                                                   //  logisticsLoadBean = (LogisticsLoadBean) list.get(i);
-                                            %>
+                                                    
+if(logisticsLoadBean.getDirection().equalsIgnoreCase("Outbound"))  {%>
 
                                             <tr>
+                                               <%}
+else{%><tr style="background:none;background: beige;"><%}if(logisticsLoadBean.getDirection().equalsIgnoreCase("Outbound")){ %>
+                                                
                                                 <td>
-                                                    <%
+                                                    <%}else{%>
+                                                    <td style="background: none;">
+                                                    <%}
                                                         out.println(logisticsLoadBean.getFile_type());
                                                     %>
 
                                                 </td>
+                                 <%if(logisticsLoadBean.getDirection().equalsIgnoreCase("Outbound")){ %>
+                                                
                                                 <td>
-                                                    <%
+                                                    <%}else{%>
+                                                    <td style="background: none;">
+                                                    <%}
                                                         out.println(logisticsLoadBean.getFile_id());
                                                     %>
 
                                                 </td>
 
-                                                <td><a href="javascript:getLoadTenderingDetails('<%=logisticsLoadBean.getFile_id()%>','<%=logisticsLoadBean.getShipmentId()%>','<%=logisticsLoadBean.getId()%>');">
+                                          <%if(logisticsLoadBean.getDirection().equalsIgnoreCase("Outbound")){ %>
+                                                
+                                                <td>
+                                                    <%}else{%>
+                                                    <td style="background: none;">
+                                                    <%}%>
+                                       <a href="javascript:getLoadTenderingDetails('<%=logisticsLoadBean.getFile_id()%>','<%=logisticsLoadBean.getShipmentId()%>','<%=logisticsLoadBean.getId()%>');">
 
                                                         <%
                                                             if (logisticsLoadBean.getShipmentId() != null) {
@@ -592,15 +608,25 @@
                                                         %>
                                                     </a>   
                                                 </td>
+                                                <%if(logisticsLoadBean.getDirection().equalsIgnoreCase("Outbound")){ %>
+                                                
                                                 <td>
-                                                    <%                                                        out.println(logisticsLoadBean.getPname());
+                                                    <%}else{%>
+                                                    <td style="background: none;">
+                                                    <%}
+                                 
+                                                                                                            out.println(logisticsLoadBean.getPname());
                                                     %>
 
                                                 </td>
 
-
+<%if(logisticsLoadBean.getDirection().equalsIgnoreCase("Outbound")){ %>
+                                                
                                                 <td>
-                                                    <%
+                                                    <%}else{%>
+                                                    <td style="background: none;">
+                                                    <%}
+                                 
                                                         out.println(logisticsLoadBean.getDate_time_rec().toString().substring(0, logisticsLoadBean.getDate_time_rec().toString().lastIndexOf(":")));
                                                     %>
 
@@ -621,8 +647,13 @@
                                              %>
                                                      
                                                  </td>--%>
+                                                <%if(logisticsLoadBean.getDirection().equalsIgnoreCase("Outbound")){ %>
+                                                
                                                 <td>
-                                                    <%
+                                                    <%}else{%>
+                                                    <td style="background: none;">
+                                                    <%}
+                                 
                                                         out.println(logisticsLoadBean.getDirection());
                                                     %>
 
@@ -631,8 +662,13 @@
 
 
 
+                                               <%if(logisticsLoadBean.getDirection().equalsIgnoreCase("Outbound")){ %>
+                                                
                                                 <td>
-                                                    <%
+                                                    <%}else{%>
+                                                    <td style="background: none;">
+                                                    <%}
+                                 
                                                         if (logisticsLoadBean.getStatus() != null) {
                                                             if (logisticsLoadBean.getStatus().equalsIgnoreCase("ERROR")) {
                                                                 out.println("<font color='red'>" + logisticsLoadBean.getStatus() + "</font>");
@@ -649,8 +685,13 @@
 
                                                 </td>
 
+                                              <%if(logisticsLoadBean.getDirection().equalsIgnoreCase("Outbound")){ %>
+                                                
                                                 <td>
-                                                    <%
+                                                    <%}else{%>
+                                                    <td style="background: none;">
+                                                    <%}
+                                 
                                                         //out.println(logisticsLoadBean.getTransactionPurpose());
                                                         if (logisticsLoadBean.getTransactionPurpose() != null) {
                                                             if (logisticsLoadBean.getTransactionPurpose().equalsIgnoreCase("N")) {
@@ -665,8 +706,13 @@
                                                         }
                                                     %>
                                                 </td>
+                                                <%if(logisticsLoadBean.getDirection().equalsIgnoreCase("Outbound")){ %>
+                                                
                                                 <td>
-                                                    <%
+                                                    <%}else{%>
+                                                    <td style="background: none;">
+                                                    <%}
+                                 
                                                         if (logisticsLoadBean.getPoNumber() != null) {
                                                         out.println(logisticsLoadBean.getPoNumber());
                                                         }else{
