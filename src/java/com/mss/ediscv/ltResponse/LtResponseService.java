@@ -15,5 +15,5 @@ import javax.servlet.http.HttpServletRequest;
 public interface LtResponseService {
 
     public ArrayList<LtResponseBean> getLtResponseList(LtResponse ltResponse, HttpServletRequest http) throws ServiceLocatorException;
-
+public ArrayList<LtResponseBean> getLtResponseArchiveList(LtResponse ltResponse, HttpServletRequest http) throws ServiceLocatorException;
 }

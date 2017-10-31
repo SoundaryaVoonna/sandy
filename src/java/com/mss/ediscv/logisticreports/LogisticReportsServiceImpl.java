@@ -264,4 +264,223 @@ public class LogisticReportsServiceImpl implements LogisticReportsService {
         // System.out.println("Length--->"+purchaseList.size());
         return documentList;
     }
+
+    @Override
+ public ArrayList<LogisticReportsBean> getDocumentArchiveList(LogisticReportsAction logisticreportsAction, String roleId, HttpSession hsession, HttpServletRequest httpServletRequest) throws ServiceLocatorException {
+        StringBuffer documentSearchQuery = new StringBuffer();
+        logger.info("Entered into the :::: ReportsServiceImpl :::: getDocumentList");
+
+        String docdatepicker = logisticreportsAction.getDocdatepicker();
+        String docdatepickerfrom = logisticreportsAction.getDocdatepickerfrom();
+        String docSenderId = "";
+        if (logisticreportsAction.getDocSenderId() != null && !"".equals(logisticreportsAction.getDocSenderId().trim())) {
+        docSenderId = logisticreportsAction.getDocSenderId();
+        }
+        String docSenderName = "";
+        if (logisticreportsAction.getDocSenderName() != null && !"".equals(logisticreportsAction.getDocSenderName().trim())) {
+        docSenderName = logisticreportsAction.getDocSenderName();
+        }
+        String docBusId = "";
+        if (logisticreportsAction.getDocBusId() != null && !"".equals(logisticreportsAction.getDocBusId().trim())) {
+        docBusId = logisticreportsAction.getDocBusId();
+        }
+        String docRecName = "";
+        if (logisticreportsAction.getDocRecName() != null && !"".equals(logisticreportsAction.getDocRecName().trim())) {
+        docRecName = logisticreportsAction.getDocRecName();
+        }
+        String doctype = "";
+        if (logisticreportsAction.getDocType() != null && !logisticreportsAction.getDocType().equals("-1")) {
+            doctype = logisticreportsAction.getDocType();
+        }
+
+        String status = logisticreportsAction.getStatus();
+        String ackStatus = logisticreportsAction.getAckStatus();
+
+        documentSearchQuery.append("SELECT DISTINCT TOP 500 (ARCHIVE_FILES.FILE_ID) as FILE_ID,"
+                + "ARCHIVE_FILES.ISA_NUMBER as ISA_NUMBER,ARCHIVE_FILES.FILE_TYPE as FILE_TYPE,ARCHIVE_FILES.CARRIER_STATUS,"
+                + "ARCHIVE_FILES.FILE_ORIGIN as FILE_ORIGIN,ARCHIVE_FILES.TRANSACTION_TYPE as TRANSACTION_TYPE,ARCHIVE_FILES.PRI_KEY_TYPE,"
+                + "ARCHIVE_FILES.DIRECTION as DIRECTION,ARCHIVE_FILES.DATE_TIME_RECEIVED as DATE_TIME_RECEIVED,ARCHIVE_FILES.SEC_KEY_TYPE,"
+                + "ARCHIVE_FILES.STATUS as STATUS,ARCHIVE_FILES.ACK_STATUS as ACK_STATUS,TP2.NAME as RECEIVER_NAME,TP1.NAME as SENDER_NAME,ARCHIVE_FILES.SENDER_ID,ARCHIVE_FILES.RECEIVER_ID,"
+                + "ARCHIVE_FILES.SEC_KEY_VAL,ARCHIVE_FILES.REPROCESSSTATUS,ARCHIVE_FILES.FILENAME,ARCHIVE_FILES.PRI_KEY_VAL,trsrsp.RESPONSE_STATUS,ARCHIVE_FILES.TRANSACTION_PURPOSE FROM ARCHIVE_FILES "
+                + "LEFT OUTER JOIN ARCHIVE_TRANSPORT_LT_RESPONSE trsrsp on (trsrsp.FILE_ID=ARCHIVE_FILES.FILE_ID)"
+                + " LEFT OUTER JOIN TP TP1 ON (TP1.ID=ARCHIVE_FILES.TMW_SENDERID) "
+                + " LEFT OUTER JOIN TP TP2 ON (TP2.ID=ARCHIVE_FILES.TMW_RECEIVERID)"
+                + " LEFT OUTER JOIN TP TP3 ON (TP3.ID=ARCHIVE_FILES.SENDER_ID)"
+                + " LEFT OUTER JOIN TP TP4 ON (TP4.ID=ARCHIVE_FILES.RECEIVER_ID)");
+
+        documentSearchQuery.append(" WHERE 1=1 AND FLOWFLAG LIKE '%L%'");
+        //////////////////
+        if (roleId.equals("102")) {
+            documentSearchQuery.append(" AND ARCHIVE_FILES.TRANSACTION_TYPE !='210' ");
+        } else if (roleId.equals("103")) {
+            documentSearchQuery.append(" AND ARCHIVE_FILES.TRANSACTION_TYPE ='210' ");
+
+        }
+
+                /////////
+        if (doctype != null && !"".equals(doctype.trim())) {
+            documentSearchQuery.append(WildCardSql.getWildCardSql1("ARCHIVE_FILES.TRANSACTION_TYPE",
+                    doctype.trim()));
+        }
+        //Status
+        if (status != null && !"-1".equals(status.trim())) {
+            documentSearchQuery.append(WildCardSql.getWildCardSql1("ARCHIVE_FILES.STATUS",
+                    status.trim()));
+        }
+        //ACK_STATUS
+        if (ackStatus != null && !"-1".equals(ackStatus.trim())) {
+            documentSearchQuery.append(WildCardSql.getWildCardSql1("ARCHIVE_FILES.ACK_STATUS",
+                    ackStatus.trim()));
+        }
+
+//                if (docBusId != null && !"".equals(docBusId.trim())) {
+//			documentSearchQuery.append(WildCardSql.getWildCardSql1("TP2.ID",
+//					docBusId.trim().toUpperCase()));
+//		}
+        if (docBusId != null && !"".equals(docBusId.trim())) {
+            documentSearchQuery.append(" AND (ARCHIVE_FILES.RECEIVER_ID like '%" + docBusId + "%' OR ARCHIVE_FILES.TMW_RECEIVERID like '%" + docBusId + "%')");
+        }
+
+//                if (docSenderId != null && !"".equals(docSenderId.trim())) {
+//			documentSearchQuery.append(WildCardSql.getWildCardSql1("TP1.ID",
+//					docSenderId.trim().toUpperCase()));
+//		}
+        if (docSenderId != null && !"".equals(docSenderId.trim())) {
+            documentSearchQuery.append(" AND (ARCHIVE_FILES.SENDER_ID like '%" + docSenderId + "%' OR ARCHIVE_FILES.TMW_SENDERID like '%" + docSenderId + "%')");
+        }
+
+//                  if (docSenderName != null && !"".equals(docSenderName.trim())) {
+//			documentSearchQuery.append(WildCardSql.getWildCardSql1("TP1.NAME",
+//					docSenderName.trim().toUpperCase()));
+//		}
+        if (docSenderName != null && !"".equals(docSenderName.trim())) {
+
+            documentSearchQuery.append(" AND (TP3.NAME like '%" + docSenderName + "%' OR TP1.NAME like '%" + docSenderName + "%')");
+
+        }
+
+//                if (docRecName != null && !"".equals(docRecName.trim())) {
+//			documentSearchQuery.append(WildCardSql.getWildCardSql1("TP2.NAME",
+//					docRecName.trim().toUpperCase()));
+//		}
+        if (docRecName != null && !"".equals(docRecName.trim())) {
+            documentSearchQuery.append(" AND (TP4.NAME like '%" + docRecName + "%' OR TP2.NAME like '%" + docRecName + "%')");
+
+        }
+
+        if (docdatepicker != null && !"".equals(docdatepicker)) {
+            tmp_Recieved_From = DateUtility.getInstance().DateViewToDBCompare(docdatepicker);
+            documentSearchQuery.append(" AND ARCHIVE_FILES.DATE_TIME_RECEIVED <= '" + tmp_Recieved_From
+                    + "'");
+        }
+        if (docdatepickerfrom != null && !"".equals(docdatepickerfrom)) {
+            tmp_Recieved_From = DateUtility.getInstance().DateViewToDBCompare(docdatepickerfrom);
+            documentSearchQuery.append(" AND ARCHIVE_FILES.DATE_TIME_RECEIVED >= '" + tmp_Recieved_From
+                    + "'");
+        }
+
+        //LogisticReportsBean
+        documentSearchQuery.append(" order by DATE_TIME_RECEIVED DESC");
+                  //documentSearchQuery.append(" order by DATE_TIME_RECEIVED DESC fetch first 50 rows only");        
+        // documentSearchQuery.append(" WITH UR");
+        System.out.println("DOC queryquery prasad-->" + documentSearchQuery.toString());
+        String searchQuery = documentSearchQuery.toString();
+
+        try {
+            connection = ConnectionProvider.getInstance().getConnection();
+
+            statement = connection.createStatement();
+
+            resultSet = statement.executeQuery(searchQuery);
+
+            documentList = new ArrayList<LogisticReportsBean>();
+
+            while (resultSet.next()) {
+                LogisticReportsBean logisticsreportBean = new LogisticReportsBean();
+                logisticsreportBean.setFile_id(resultSet.getString("FILE_ID"));
+                logisticsreportBean.setFile_origin(resultSet.getString("FILE_ORIGIN"));
+                logisticsreportBean.setFile_type(resultSet.getString("FILE_TYPE"));
+                logisticsreportBean.setIsa_number(resultSet.getString("ISA_NUMBER"));
+                String trans = resultSet.getString("TRANSACTION_TYPE");
+                logisticsreportBean.setTransaction_type(trans);
+                String sektype = resultSet.getString("SEC_KEY_TYPE");
+                String Direction = resultSet.getString("DIRECTION");
+                logisticsreportBean.setDirection(Direction);
+                //logisticsreportBean.setDirection(resultSet.getString("DIRECTION"));
+                logisticsreportBean.setDate_time_rec(resultSet.getTimestamp("DATE_TIME_RECEIVED"));
+                logisticsreportBean.setStatus(resultSet.getString("STATUS"));
+
+                if (Direction.equalsIgnoreCase("INBOUND")) {
+                    logisticsreportBean.setPname(resultSet.getString("SENDER_NAME"));
+                }
+                if (Direction.equalsIgnoreCase("OUTBOUND")) {
+                    logisticsreportBean.setPname(resultSet.getString("RECEIVER_NAME"));
+                }
+                //if(trans!=null)   {   
+                if ((trans.equalsIgnoreCase("214")) || (trans.equalsIgnoreCase("990"))) {
+                    if (sektype.equalsIgnoreCase("ORDERNUMBER")) {
+                        logisticsreportBean.setSce_key_val(resultSet.getString("SEC_KEY_VAL"));
+                    }
+
+                } //                            else if(trans.equalsIgnoreCase("990")){
+                //                                  if(sektype.equalsIgnoreCase("ORDERNUMBER")){
+                //                                   logisticsreportBean.setOrderNum(resultSet.getString("SEC_KEY_VAL"));  
+                //                                }
+                //                            } 
+                else if (trans.equalsIgnoreCase("210")) {
+                    if (sektype.equalsIgnoreCase("IN")) {
+                        logisticsreportBean.setInv_Num(resultSet.getString("SEC_KEY_VAL"));
+                    }
+
+                } else if (trans.equalsIgnoreCase("204")) {
+
+                    logisticsreportBean.setShipmentNumber(resultSet.getString("PRI_KEY_VAL"));
+
+                }
+
+                logisticsreportBean.setReProcessStatus(resultSet.getString("REPROCESSSTATUS"));
+
+                if (resultSet.getString("TRANSACTION_TYPE").equalsIgnoreCase("204")) {
+                    logisticsreportBean.setTransactionStatus(resultSet.getString("TRANSACTION_PURPOSE"));
+                } else if (resultSet.getString("TRANSACTION_TYPE").equalsIgnoreCase("214")) {
+                    logisticsreportBean.setTransactionStatus(resultSet.getString("CARRIER_STATUS"));
+                    //System.out.println("CARRIER_STATUS"+resultSet.getString("CARRIER_STATUS"));
+                } else if (resultSet.getString("TRANSACTION_TYPE").equalsIgnoreCase("990")) {
+                    logisticsreportBean.setTransactionStatus(resultSet.getString("RESPONSE_STATUS"));
+                }
+
+                logisticsreportBean.setReProcessStatus(resultSet.getString("REPROCESSSTATUS"));
+                logisticsreportBean.setAckStatus(resultSet.getString("ACK_STATUS"));
+                logisticsreportBean.setFile_name(resultSet.getString("FILENAME"));
+                documentList.add(logisticsreportBean);
+            }
+
+        } catch (SQLException e) {
+			//System.out.println("I am in catch block coming in IMpl");
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (Exception ex) {
+            //System.out.println("hi"+ex.getMessage());
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                    resultSet = null;
+                }
+                if (statement != null) {
+                    statement.close();
+                    statement = null;
+                }
+
+                if (connection != null) {
+                    connection.close();
+                    connection = null;
+                }
+            } catch (SQLException se) {
+                throw new ServiceLocatorException(se);
+            }
+        }
+        // System.out.println("Length--->"+purchaseList.size());
+        return documentList;
+    }
 }

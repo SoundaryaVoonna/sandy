@@ -636,12 +636,13 @@ function populateInvDetails(responseXML)
  * For doc Ajax call
  * 
  */
-function getDocDetails(number,ponum,id){
+function getDocDetails(number,ponum,id,db){
     
     var num=number;
     var ponum = ponum;
     var id = id;
-    
+    var db=db;
+    alert(db);
     $(function() {
        
            $('#detail_box').show();
@@ -656,7 +657,7 @@ function getDocDetails(number,ponum,id){
   // alert(ponum);
    var req = getXMLHttpRequest();
    req.onreadystatechange = readyStateHandlerText(req,populateDocDetails); 
-   var url="../ajax/getDocDetails.action?isaNumber="+num+"&poNumber="+ponum+"&id="+id;
+   var url="../ajax/getDocDetails.action?isaNumber="+num+"&poNumber="+ponum+"&id="+id+"&database="+db;
     req.open("GET",url,"true");
     req.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
     req.send(null);
@@ -1976,11 +1977,11 @@ function populateTpDetailInformation(responseXML)
  
 }
 
-function getLogisticsDocDetails(number,id){
+function getLogisticsDocDetails(number,id,db){
     
     var num=number;
     var id = id;
-    $(function() {
+       $(function() {
        
            $('#detail_box').show();
            return false;
@@ -1988,7 +1989,7 @@ function getLogisticsDocDetails(number,id){
    });
    var req = getXMLHttpRequest();
    req.onreadystatechange = readyStateHandlerText(req,populateLogisticsDocDetails); 
-   var url="../ajax/getLogisticsDocDetails.action?isaNumber="+num+"&id="+id;
+   var url="../ajax/getLogisticsDocDetails.action?isaNumber="+num+"&id="+id+"&database="+db;
     req.open("GET",url,"true");
     req.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
     req.send(null);
@@ -2332,7 +2333,7 @@ function populateLoadTenderingDetails(responseXML)
  
 }
 
-function getLtResponseDetails(fileId,refId){
+function getLtResponseDetails(fileId,refId, db){
   //  alert("hii");
     //var num=number;
    //alert("inv number-->"+num);
@@ -2346,13 +2347,12 @@ function getLtResponseDetails(fileId,refId){
  var req = getXMLHttpRequest();
    req.onreadystatechange = readyStateHandlerText(req,populateLtResponseDetails); 
    
-    var url="../ajax/getLtResponseDetails.action?fileId="+fileId+"&refId="+refId;
+    var url="../ajax/getLtResponseDetails.action?fileId="+fileId+"&refId="+refId + "&database=" + db;
    
     req.open("GET",url,"true");
     req.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
     req.send(null);
 }
-
 function populateLtResponseDetails(responseXML)
 {
      var details = responseXML.getElementsByTagName("DETAILS")[0];
@@ -2485,10 +2485,11 @@ function populateLtResponseDetails(responseXML)
  * Author : santosh kola
  * 
  */
-function getLogisticsInvDetails(number,id){
+function getLogisticsInvDetails(number,id, db){
   //  alert("hii");
     var num=number;
     var id=id;
+    
    //alert("inv number-->"+num);
  //  var req = new XMLHttpRequest();
  $(function() {
@@ -2500,7 +2501,7 @@ function getLogisticsInvDetails(number,id){
  var req = getXMLHttpRequest();
    req.onreadystatechange = readyStateHandlerText(req,populateLogisticsInvDetails); 
    
-    var url="../ajax/getLogisticsInvDetails.action?invNumber="+num+"&id="+id;
+    var url="../ajax/getLogisticsInvDetails.action?invNumber="+num+"&id="+id+ "&database=" + db;
    
     req.open("GET",url,"true");
     req.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
@@ -2635,7 +2636,7 @@ function populateLogisticsInvDetails(responseXML)
  * Author : santosh kola
  * 
  */
-function getLogisticsShipmentDetails(number,ponum,id){
+function getLogisticsShipmentDetails(number,ponum,id,db){
   //  alert("hii");
   
     var num=number;
@@ -2654,7 +2655,7 @@ function getLogisticsShipmentDetails(number,ponum,id){
  var req = getXMLHttpRequest();
    req.onreadystatechange = readyStateHandlerText(req,populateLogisticsShipmentDetails); 
    
-    var url="../ajax/getLogisticsShipmentDetails.action?asnNumber="+num+"&poNumber="+ponum+"&id="+id;
+    var url="../ajax/getLogisticsShipmentDetails.action?asnNumber="+num+"&poNumber="+ponum+"&id="+id+"&database="+db;
    
     req.open("GET",url,"true");
     req.setRequestHeader("Content-Type","application/x-www-form-urlencoded");

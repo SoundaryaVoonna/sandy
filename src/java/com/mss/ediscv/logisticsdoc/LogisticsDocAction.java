@@ -75,6 +75,15 @@ public class LogisticsDocAction extends ActionSupport implements ServletRequestA
 
     private String colName;
     private List list;
+    private String database;
+
+    public String getDatabase() {
+        return database;
+    }
+
+    public void setDatabase(String database) {
+        this.database = database;
+    }
 
     private List<LogisticsDocBean> documentList;
     private static Logger logger = Logger.getLogger(LogisticsAction.class
@@ -106,6 +115,11 @@ public class LogisticsDocAction extends ActionSupport implements ServletRequestA
                 defaultFlowId = DataSourceDataProvider.getInstance().getFlowIdByFlowName("Logistics");
                 httpServletRequest.getSession(false).setAttribute(AppConstants.SES_USER_DEFAULT_FLOWID, defaultFlowId);
             }
+             if ("ARCHIVE".equals(getDatabase())) {
+                setDatabase("ARCHIVE");
+            } else {
+                setDatabase("MSCVP");
+            }
             setResultType(SUCCESS);
         }
         logger.info("End of ::::SearchDOCUMENTSAction :::: prepare ");
@@ -131,7 +145,12 @@ public class LogisticsDocAction extends ActionSupport implements ServletRequestA
                 //search(indexDir, q);
                 List<LogisticsDocBean> searchResult = null;
                 // searchResult = search(indexDir, q);
-                searchResult = ServiceLocator.getLogDocService().buildDocumentQuery(this, httpServletRequest);
+                 if ("ARCHIVE".equals(getDatabase())) {
+                    searchResult = ServiceLocator.getLogDocService().buildDocumentArchiveQuery(this, httpServletRequest);
+
+                } else {
+                    searchResult = ServiceLocator.getLogDocService().buildDocumentQuery(this, httpServletRequest);
+                }
                 //System.out.println("search result is::::::"+searchResult);
                 session.setAttribute("searchResult", searchResult);
                 //session.setAttribute("searchString",searchString);

@@ -56,6 +56,7 @@ public class LogisticsInvoiceAction extends ActionSupport implements ServletRequ
     private List pageList;
     private int startValue;
     private int endValue;
+    private String database;
 
     private List<LogisticsInvoiceBean> ltInvoiceList;
     private static Logger logger = Logger.getLogger(LogisticsInvoiceAction.class
@@ -89,6 +90,11 @@ public class LogisticsInvoiceAction extends ActionSupport implements ServletRequ
                 defaultFlowId = DataSourceDataProvider.getInstance().getFlowIdByFlowName("Logistics");
                 httpServletRequest.getSession(false).setAttribute(AppConstants.SES_USER_DEFAULT_FLOWID, defaultFlowId);
             }
+             if ("ARCHIVE".equals(getDatabase())) {
+                    setDatabase("ARCHIVE");
+                } else {
+                    setDatabase("MSCVP");
+                }
             setResultType(SUCCESS);
             //}
         }
@@ -118,7 +124,12 @@ public class LogisticsInvoiceAction extends ActionSupport implements ServletRequ
                 session.removeAttribute("searchString");
                 session.removeAttribute("gridSize");
                 session.removeAttribute("noOfPages");
+                if("ARCHIVE".equals(getDatabase())){
+                    ltInvoiceList = ServiceLocator.getLogInvoiceService().buildLogInvoiceArchiveQuery(this, httpServletRequest);
+                }else{
+                  
                 ltInvoiceList = ServiceLocator.getLogInvoiceService().buildLogInvoiceQuery(this, httpServletRequest);
+                }
                 httpServletRequest.getSession(false).setAttribute(AppConstants.SES_LTINVOICE_LIST, ltInvoiceList);
                 System.out.println("list size-----" + ltInvoiceList.size());
                 if (ltInvoiceList.size() > 0) {
@@ -686,5 +697,12 @@ public class LogisticsInvoiceAction extends ActionSupport implements ServletRequ
 
     public void setEndValue(int endValue) {
         this.endValue = endValue;
+    }
+     public String getDatabase() {
+        return database;
+    }
+
+    public void setDatabase(String database) {
+        this.database = database;
     }
 }

@@ -110,9 +110,17 @@
             }
 
             function getDetails(fileId, refId) {
-                //  alert("hiiii");    
-
-                getLtResponseDetails(fileId, refId);
+                  
+                var form = document.forms['ltResponseForm'];
+                var radios = form.elements["database"];
+                var db=null;
+                for(var i=0;i<radios.length;i++) {
+                    if(radios[i].checked == true) {
+                        db = radios[i].value;
+                    }
+                }
+           
+                getLtResponseDetails(fileId, refId, db);
             }
             function checkCorrelation() {
 
@@ -182,15 +190,23 @@
              $('ul.sf-menu').sooperfish();
              });*/
 
-            function gridNext(c) {
+             function gridNext(c) {
                 var b = c.id;
                 var e = parseInt(document.ltResponseForm.txtStartGrid.value);
                 var a = parseInt(document.ltResponseForm.txtEndGrid.value);
                 var d = parseInt(document.ltResponseForm.txtMaxGrid.value);
+                 var form = document.forms['ltResponseForm'];
+                var radios = form.elements["database"];
+                var db=null;
+                for(var i=0;i<radios.length;i++) {
+                    if(radios[i].checked == true) {
+                        db = radios[i].value;
+                    }
+                }
                 if (b == "Next") {
                     if (a < d)
                     {
-                        document.location = "nextLtResponse.action?startValue=" + e + "&endValue=" + a + "&button=" + b
+                        document.location = "nextLtResponse.action?startValue=" + e + "&endValue=" + a + "&button=" + b+"&database="+db;
                     } else {
                         if (a == d) {
                             alert("You are already viewing last page!")
@@ -200,7 +216,7 @@
                     if (b == "Previous")
                     {
                         if (e < d && e > 0) {
-                            document.location = "nextLtResponse.action?startValue=" + e + "&endValue=" + a + "&button=" + b
+                            document.location = "nextLtResponse.action?startValue=" + e + "&endValue=" + a + "&button=" + b+"&database="+db;
                         } else {
                             if (e == 0) {
                                 alert("You are already viewing first page!")
@@ -211,7 +227,7 @@
                             if (e < d && e > 0) {
                                 e = 0;
                                 a = 10;
-                                document.location = "nextLtResponse.action?startValue=" + e + "&endValue=" + a + "&button=" + b
+                                document.location = "nextLtResponse.action?startValue=" + e + "&endValue=" + a + "&button=" + b+"&database="+db;
                             } else {
                                 if (e == 0) {
                                     alert("You are already viewing first page!")
@@ -222,7 +238,7 @@
                                 if (a < d) {
                                     e = d - 10;
                                     a = d;
-                                    document.location = "nextLtResponse.action?startValue=" + e + "&endValue=" + a + "&button=" + b
+                                    document.location = "nextLtResponse.action?startValue=" + e + "&endValue=" + a + "&button=" + b+"&database="+db;
                                 } else {
                                     if (a == d) {
                                         alert("You are already viewing last page!")
@@ -241,9 +257,18 @@
                 var b = "Select";
                 var startValue = ((parseInt(pageNumber) - 1) * 10);
                 var endValue = parseInt(startValue) + 10;
-                document.location = "nextLtResponse.action?startValue=" + startValue + "&endValue=" + endValue + "&button=" + b
+                var form = document.forms['ltResponseForm'];
+                var radios = form.elements["database"];
+                var db=null;
+                for(var i=0;i<radios.length;i++) {
+                    if(radios[i].checked == true) {
+                        db = radios[i].value;
+                    }
+                }
+                document.location = "nextLtResponse.action?startValue=" + startValue + "&endValue=" + endValue + "&button=" + b+"&database="+db;
 
             }
+
 
         </script>
 
@@ -351,7 +376,8 @@
                                 <table >
                                     <tbody >
                                         <s:form action="../ltResponse/doSearchltResponse.action" method="post" name="ltResponseForm" id="ltResponseForm" theme="simple">
-
+                                           <tr><td><label>Database&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;</label>
+                                                        <s:radio cssClass="myRadio" id="database" name="database" value="%{database}" list="#@java.util.LinkedHashMap@{'MSCVP':'LIVE','ARCHIVE':'ARCHIVE'}"/></td></tr>
                                             <tr>
                                                 <td class="lableLeft"><s:label value="Date From"/> </td>
                                                 <td><%-- <input type="text" id="datepickerfrom" /> --%>

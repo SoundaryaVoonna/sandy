@@ -17,5 +17,5 @@ import javax.servlet.http.HttpSession;
 public interface LogisticReportsService {
 
     public ArrayList<LogisticReportsBean> getDocumentList(LogisticReportsAction logisticreportsAction, String roleId, HttpSession hsession, HttpServletRequest http) throws ServiceLocatorException;
-
+public ArrayList<LogisticReportsBean> getDocumentArchiveList(LogisticReportsAction logisticreportsAction, String roleId, HttpSession hsession, HttpServletRequest http) throws ServiceLocatorException;
 }

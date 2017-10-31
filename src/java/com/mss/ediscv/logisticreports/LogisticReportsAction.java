@@ -47,6 +47,7 @@ public class LogisticReportsAction extends ActionSupport implements ServletReque
     private int endValue;
     private List<LogisticReportsBean> documentList;
     private Map partnerMap;
+    private String database;
 
     public String getLogisticReports() throws Exception {
         logger.info("Entered into the ::::SearchDocRepositorAction :::: prepare ");
@@ -90,6 +91,11 @@ public class LogisticReportsAction extends ActionSupport implements ServletReque
                 defaultFlowId = DataSourceDataProvider.getInstance().getFlowIdByFlowName("Logistics");
                 httpServletRequest.getSession(false).setAttribute(AppConstants.SES_USER_DEFAULT_FLOWID, defaultFlowId);
             }
+            if ("ARCHIVE".equals(getDatabase())) {
+                    setDatabase("ARCHIVE");
+                } else {
+                    setDatabase("MSCVP");
+                }
             setResultType(SUCCESS);
         }
         logger.info("End of ::::SearchDOCUMENTSAction :::: prepare ");
@@ -147,7 +153,13 @@ public class LogisticReportsAction extends ActionSupport implements ServletReque
                 session.removeAttribute("searchString");
                 session.removeAttribute("gridSize");
                 session.removeAttribute("noOfPages");
+                if("ARCHIVE".equals(getDatabase())){
+                     documentList = ServiceLocator.getLogisticReportsService().getDocumentArchiveList(this,roleIds, hsession, httpServletRequest);
+                }else{
+                  
+               
                 documentList = ServiceLocator.getLogisticReportsService().getDocumentList(this, roleIds, hsession, httpServletRequest);
+                }
                 System.out.println("the logis  list is --->" + documentList);
                 httpServletRequest.getSession(false).setAttribute(AppConstants.SES_LOG_DOC_LIST, documentList);
                 System.out.println("list size-----" + documentList.size());
@@ -603,5 +615,11 @@ public class LogisticReportsAction extends ActionSupport implements ServletReque
     public void setPageList(List pageList) {
         this.pageList = pageList;
     }
+public String getDatabase() {
+        return database;
+    }
 
+    public void setDatabase(String database) {
+        this.database = database;
+    }
 }

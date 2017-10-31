@@ -71,6 +71,15 @@ public class LogisticsLoadAction extends ActionSupport implements ServletRequest
     private List pageList;
     private int startValue;
     private int endValue;
+     private String database;
+
+    public String getDatabase() {
+        return database;
+    }
+
+    public void setDatabase(String database) {
+        this.database = database;
+    }
     private List<LogisticsLoadBean> loadList;
     private static Logger logger = Logger.getLogger(LogisticsAction.class
             .getName());
@@ -100,6 +109,11 @@ public class LogisticsLoadAction extends ActionSupport implements ServletRequest
             if (!defaultFlowName.equals("Logistics")) {
                 defaultFlowId = DataSourceDataProvider.getInstance().getFlowIdByFlowName("Logistics");
                 httpServletRequest.getSession(false).setAttribute(AppConstants.SES_USER_DEFAULT_FLOWID, defaultFlowId);
+            }
+             if ("ARCHIVE".equals(getDatabase())) {
+                setDatabase("ARCHIVE");
+            } else {
+                setDatabase("MSCVP");
             }
             setResultType(SUCCESS);
 //}
@@ -131,7 +145,14 @@ public class LogisticsLoadAction extends ActionSupport implements ServletRequest
                 session.removeAttribute("searchString");
                 session.removeAttribute("gridSize");
                 session.removeAttribute("noOfPages");
-                loadList = ServiceLocator.getLoadService().buildLoadQuery(this, httpServletRequest);
+                 if ("ARCHIVE".equals(getDatabase())) {
+                    loadList = ServiceLocator.getLoadService().buildLoadArchiveQuery(this, httpServletRequest);
+
+                } else {
+                    loadList = ServiceLocator.getLoadService().buildLoadQuery(this, httpServletRequest);
+
+                }
+
                 httpServletRequest.getSession(false).setAttribute(AppConstants.SES_LOAD_LIST, loadList);
                 System.out.println("list size-----" + loadList.size());
                 if (loadList.size() > 0) {

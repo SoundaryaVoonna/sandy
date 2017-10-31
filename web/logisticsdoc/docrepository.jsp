@@ -123,8 +123,17 @@
 
             }
 
-            function getDetails(val, id) {
-                getLogisticsDocDetails(val, id);
+           function getDetails(val, id) {
+                //var db = document.forms["purchaseForm"]["database"].value;
+                var form = document.forms['documentForm'];
+                var radios = form.elements["database"];
+                var db=null;
+                for(var i=0;i<radios.length;i++) {
+                    if(radios[i].checked == true) {
+                        db = radios[i].value;
+                    }
+                }
+                getLogisticsDocDetails(val, id,db);
             }
             function checkCorrelation() {
 
@@ -214,10 +223,18 @@
                 var e = parseInt(document.documentForm.txtStartGrid.value);
                 var a = parseInt(document.documentForm.txtEndGrid.value);
                 var d = parseInt(document.documentForm.txtMaxGrid.value);
+                var form = document.forms['documentForm'];
+                var radios = form.elements["database"];
+                var db=null;
+                for(var i=0;i<radios.length;i++) {
+                    if(radios[i].checked == true) {
+                        db = radios[i].value;
+                    }
+                }
                 if (b == "Next") {
                     if (a < d)
                     {
-                        document.location = "nextLogisticDoc.action?startValue=" + e + "&endValue=" + a + "&button=" + b
+                        document.location = "nextLogisticDoc.action?startValue=" + e + "&endValue=" + a + "&button=" + b+"&database="+db;
                     } else {
                         if (a == d) {
                             alert("You are already viewing last page!")
@@ -227,7 +244,7 @@
                     if (b == "Previous")
                     {
                         if (e < d && e > 0) {
-                            document.location = "nextLogisticDoc.action?startValue=" + e + "&endValue=" + a + "&button=" + b
+                            document.location = "nextLogisticDoc.action?startValue=" + e + "&endValue=" + a + "&button=" + b+"&database="+db;
                         } else {
                             if (e == 0) {
                                 alert("You are already viewing first page!")
@@ -238,7 +255,7 @@
                             if (e < d && e > 0) {
                                 e = 0;
                                 a = 10;
-                                document.location = "nextLogisticDoc.action?startValue=" + e + "&endValue=" + a + "&button=" + b
+                                document.location = "nextLogisticDoc.action?startValue=" + e + "&endValue=" + a + "&button=" + b+"&database="+db;
                             } else {
                                 if (e == 0) {
                                     alert("You are already viewing first page!")
@@ -249,7 +266,7 @@
                                 if (a < d) {
                                     e = d - 10;
                                     a = d;
-                                    document.location = "nextLogisticDoc.action?startValue=" + e + "&endValue=" + a + "&button=" + b
+                                    document.location = "nextLogisticDoc.action?startValue=" + e + "&endValue=" + a + "&button=" + b+"&database="+db;
                                 } else {
                                     if (a == d) {
                                         alert("You are already viewing last page!")
@@ -268,10 +285,17 @@
                 var b = "Select";
                 var startValue = ((parseInt(pageNumber) - 1) * 10);
                 var endValue = parseInt(startValue) + 10;
-                document.location = "nextLogisticDoc.action?startValue=" + startValue + "&endValue=" + endValue + "&button=" + b
+                var form = document.forms['documentForm'];
+                var radios = form.elements["database"];
+                var db=null;
+                for(var i=0;i<radios.length;i++) {
+                    if(radios[i].checked == true) {
+                        db = radios[i].value;
+                    }
+                }
+                document.location = "nextLogisticDoc.action?startValue=" + startValue + "&endValue=" + endValue + "&button=" + b+"&database="+db;
 
             }
-
         </script>
         <script src="text/javascript">
 
@@ -384,7 +408,10 @@
                                 <table >
                                     <tbody >
                                         <s:form action="../logisticsdoc/docSearch.action" method="post" name="documentForm" id="documentForm" theme="simple">
-
+                                              <tr>
+                                                <td class="lableLeft">Database&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;</td>
+                                                <td><s:radio cssClass="myRadio" id="database" name="database" value="%{database}" list="#@java.util.LinkedHashMap@{'MSCVP':'Live','ARCHIVE':'Archive'}"/></td>
+                                            </tr>
                                             <tr>
                                                 <td class="lableLeft">Date From </td>
                                                 <td><%-- <input type="text" id="datepickerfrom" /> --%>

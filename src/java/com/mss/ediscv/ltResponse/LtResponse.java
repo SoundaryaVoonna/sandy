@@ -49,6 +49,7 @@ public class LtResponse extends ActionSupport implements ServletRequestAware {
     private List pageList;
     private int startValue;
     private int endValue;
+    private String database;
     private static Logger logger = Logger.getLogger(LtResponse.class
             .getName());
     private List<LtResponseBean> ltResponseList;
@@ -81,6 +82,11 @@ public class LtResponse extends ActionSupport implements ServletRequestAware {
                 defaultFlowId = DataSourceDataProvider.getInstance().getFlowIdByFlowName("Logistics");
                 httpServletRequest.getSession(false).setAttribute(AppConstants.SES_USER_DEFAULT_FLOWID, defaultFlowId);
             }
+            if ("ARCHIVE".equals(getDatabase())) {
+                    setDatabase("ARCHIVE");
+                } else {
+                    setDatabase("MSCVP");
+                }
             setResultType(SUCCESS);
 //}
         }
@@ -110,7 +116,13 @@ public class LtResponse extends ActionSupport implements ServletRequestAware {
                 session.removeAttribute("searchString");
                 session.removeAttribute("gridSize");
                 session.removeAttribute("noOfPages");
+                 if("ARCHIVE".equals(getDatabase())){
+                     ltResponseList = ServiceLocator.getLtResponseService().getLtResponseArchiveList(this, httpServletRequest);
+                }else{
+                  
+                
                 ltResponseList = ServiceLocator.getLtResponseService().getLtResponseList(this, httpServletRequest);
+                 }
                 httpServletRequest.getSession(false).setAttribute(AppConstants.SES_LTRESPONSE_LIST, ltResponseList);
                 System.out.println("list size-----" + ltResponseList.size());
                 if (ltResponseList.size() > 0) {
@@ -620,5 +632,13 @@ public class LtResponse extends ActionSupport implements ServletRequestAware {
     public void setEndValue(int endValue) {
         this.endValue = endValue;
     }
+    public String getDatabase() {
+        return database;
+    }
+
+    public void setDatabase(String database) {
+        this.database = database;
+    }
+
 
 }

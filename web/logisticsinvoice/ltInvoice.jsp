@@ -84,14 +84,14 @@
             }
         </script>
         <script type="text/javascript">
-            $(function() {
-                $('#attach_box').click(function() {
+            $(function () {
+                $('#attach_box').click(function () {
                     $('#sec_box').show();
                     return false;
                 });
             });
-            $(function() {
-                $('#detail_link').click(function() {
+            $(function () {
+                $('#detail_link').click(function () {
                     $('#detail_box').show();
                     return false;
                 });
@@ -100,19 +100,32 @@
             // New function to show the left grid
 
             function demo() {
-                $(function() {
+                $(function () {
 
                     $('#detail_box').show();
                     return false;
                 });
 
             }
+             function getDetails(number,id) {
+                  
+                var form = document.forms['logisticsForm'];
+                var radios = form.elements["database"];
+                var db=null;
+                for(var i=0;i<radios.length;i++) {
+                    if(radios[i].checked == true) {
+                        db = radios[i].value;
+                    }
+                }
+           
+                getLogisticsInvDetails(number,id, db);
+            }
 
 
             function checkCorrelation() {
 
                 //   alert("hiii");
-                var corrattr = document.getElementById('corrattribute').value;
+               var corrattr = document.getElementById('corrattribute').value;
                 var corrval = document.getElementById('corrvalue').value;
 
 
@@ -170,10 +183,18 @@
                 var e = parseInt(document.logisticsForm.txtStartGrid.value);
                 var a = parseInt(document.logisticsForm.txtEndGrid.value);
                 var d = parseInt(document.logisticsForm.txtMaxGrid.value);
+                 var form = document.forms['logisticsForm'];
+                var radios = form.elements["database"];
+                var db=null;
+                for(var i=0;i<radios.length;i++) {
+                    if(radios[i].checked == true) {
+                        db = radios[i].value;
+                    }
+                }
                 if (b == "Next") {
                     if (a < d)
                     {
-                        document.location = "nextLtInvoice.action?startValue=" + e + "&endValue=" + a + "&button=" + b
+                        document.location = "nextLtInvoice.action?startValue=" + e + "&endValue=" + a + "&button=" + b+"&database="+db;
                     } else {
                         if (a == d) {
                             alert("You are already viewing last page!")
@@ -183,7 +204,7 @@
                     if (b == "Previous")
                     {
                         if (e < d && e > 0) {
-                            document.location = "nextLtInvoice.action?startValue=" + e + "&endValue=" + a + "&button=" + b
+                            document.location = "nextLtInvoice.action?startValue=" + e + "&endValue=" + a + "&button=" + b+"&database="+db;
                         } else {
                             if (e == 0) {
                                 alert("You are already viewing first page!")
@@ -194,7 +215,7 @@
                             if (e < d && e > 0) {
                                 e = 0;
                                 a = 10;
-                                document.location = "nextLtInvoice.action?startValue=" + e + "&endValue=" + a + "&button=" + b
+                                document.location = "nextLtInvoice.action?startValue=" + e + "&endValue=" + a + "&button=" + b+"&database="+db;
                             } else {
                                 if (e == 0) {
                                     alert("You are already viewing first page!")
@@ -205,7 +226,7 @@
                                 if (a < d) {
                                     e = d - 10;
                                     a = d;
-                                    document.location = "nextLtInvoice.action?startValue=" + e + "&endValue=" + a + "&button=" + b
+                                    document.location = "nextLtInvoice.action?startValue=" + e + "&endValue=" + a + "&button=" + b+"&database="+db;
                                 } else {
                                     if (a == d) {
                                         alert("You are already viewing last page!")
@@ -224,7 +245,15 @@
                 var b = "Select";
                 var startValue = ((parseInt(pageNumber) - 1) * 10);
                 var endValue = parseInt(startValue) + 10;
-                document.location = "nextLtInvoice.action?startValue=" + startValue + "&endValue=" + endValue + "&button=" + b
+                var form = document.forms['logisticsForm'];
+                var radios = form.elements["database"];
+                var db=null;
+                for(var i=0;i<radios.length;i++) {
+                    if(radios[i].checked == true) {
+                        db = radios[i].value;
+                    }
+                }
+                document.location = "nextLtInvoice.action?startValue=" + startValue + "&endValue=" + endValue + "&button=" + b+"&database="+db;
 
             }
         </script>
@@ -334,7 +363,8 @@
                                 <table >
                                     <tbody >
                                         <s:form action="../logisticsinvoice/invoiceSearch.action" method="post" name="logisticsForm" id="logisticsForm" theme="simple">
-
+                                          <tr><td><label>Database&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;</label>
+                                                        <s:radio cssClass="myRadio" id="database" name="database" value="%{database}" list="#@java.util.LinkedHashMap@{'MSCVP':'LIVE','ARCHIVE':'ARCHIVE'}"/></td></tr>
 
 
                                             <tr>
@@ -470,7 +500,7 @@
                                                 if (session.getAttribute("ltInvoiceList") != null) {
 
                                                     ltInvoiceList = (List) session.getAttribute("ltInvoiceList");
-
+                                                    //  out.println("searchResult size-->"+searchResult.size());
                                                     if (null != ltInvoiceList && ltInvoiceList.size() != 0) {
                                                         resultCount = ltInvoiceList.size();
                                                     }
@@ -528,43 +558,55 @@
                                                 }
 
                                                 for (int i = strIntStartGrid, j = 0; i < strIntEndGrid; i++, j++) {
-
                                                     LogisticsInvoiceBean logisticsInvoiceBean = (LogisticsInvoiceBean) ltInvoiceList.get(i);
                                                   //  logisticsLoadBean = (LogisticsLoadBean) list.get(i);
-                                                               
-                                                    if (logisticsInvoiceBean.getDirection().equalsIgnoreCase("INBOUND")) {%>
+                                            %>
 
                                             <tr>
-                                            <%} else {%><tr style="background:none;background: beige;"><%}
-    if (logisticsInvoiceBean.getDirection().equalsIgnoreCase("INBOUND")) { %>
+                                                <%--
                                                 <td>
 
                                                     <%
-                                                    } else {%><td style="background: none;"> <%}
-    if (logisticsInvoiceBean.getInstanceId() != null && !"".equals(logisticsInvoiceBean.getInstanceId())) {
-        out.println(logisticsInvoiceBean.getInstanceId());
-    } else {
-        out.println("-");
-    }
+                                                        if (logisticsInvoiceBean.getStatus().equalsIgnoreCase("SUCCESS")) {
+                                                            //out.println("<font color='green'>"+logisticsInvoiceBean.getStatus().toUpperCase()+"</font>");
+                                                            out.println("<img    src='../includes/images/greens.png'  height='15px' width='15px'/>");
+                                                        }
+
+                                                        if (logisticsInvoiceBean.getStatus().equalsIgnoreCase("ERROR")) {
+                                                            if (logisticsInvoiceBean.getErrormsg().toLowerCase().contains("sid")) {
+                                                                //  System.out.println("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk nnnnnnnnnnnnnnnnnnn");
+                                                                //out.println("red"+);
+
+                                                                out.println("<img    src='../includes/images/reds.png'  height='15px' width='15px'/>");
+                                                            } else {
+                                                                //System.out.println("yellow");
+                                                                out.println("<img   src='../includes/images/orange1.png' height='15px' width='15px'/>");
+                                                            }
+                                                        }
+                                                    %>
+
+                                                </td>
+                                                --%>
+
+                                                <td>
+                                                    <%
+                                                        if (logisticsInvoiceBean.getInstanceId() != null && !"".equals(logisticsInvoiceBean.getInstanceId())) {
+                                                            out.println(logisticsInvoiceBean.getInstanceId());
+                                                        } else {
+                                                            out.println("-");
+                                                        }
                                                     %>
                                                 </td>
-                                                <%if (logisticsInvoiceBean.getDirection().equalsIgnoreCase("INBOUND")) { %>
                                                 <td>
-
-                                                    <%
-                                                    } else {%><td style="background: none;"> <%}
-    if (logisticsInvoiceBean.getPartner() != null && !"".equals(logisticsInvoiceBean.getPartner())) {
-        out.println(logisticsInvoiceBean.getPartner());
-    } else {
-        out.println("-");
-    }
+                                                    <% //logisticsDocBean.getStatus() != null && !"".equals(logisticsDocBean.getStatus())
+                                                        if (logisticsInvoiceBean.getPartner() != null && !"".equals(logisticsInvoiceBean.getPartner())) {
+                                                            out.println(logisticsInvoiceBean.getPartner());
+                                                        } else {
+                                                            out.println("-");
+                                                        }
                                                     %>
                                                 </td>
-                                                <%if (logisticsInvoiceBean.getDirection().equalsIgnoreCase("INBOUND")) { %>
-                                                <td>
-
-                                                    <%
-                                                    } else {%><td style="background: none;"> <%}%>  <a href="javascript:getLogisticsInvDetails('<%=logisticsInvoiceBean.getInvoiceNumber()%>','<%=logisticsInvoiceBean.getId()%>');"  >
+                                                <td >  <a href="javascript:getDetails('<%=logisticsInvoiceBean.getInvoiceNumber()%>','<%=logisticsInvoiceBean.getId()%>');"  >
                                                         <%
                                                             if (logisticsInvoiceBean.getInvoiceNumber() != null && !"".equals(logisticsInvoiceBean.getInvoiceNumber())) {
                                                                 out.println(logisticsInvoiceBean.getInvoiceNumber());
@@ -572,34 +614,26 @@
                                                                 out.println("-");
                                                             }
 
+
                                                         %>
                                                     </a>
                                                 </td>
-                                                <%if (logisticsInvoiceBean.getDirection().equalsIgnoreCase("INBOUND")) { %>
                                                 <td>
-
-                                                    <%
-                                                    } else {%><td style="background: none;"> <%}
-    if (logisticsInvoiceBean.getDate_time_rec() != null && !"".equals(logisticsInvoiceBean.getDate_time_rec())) {
-        out.println(logisticsInvoiceBean.getDate_time_rec().toString().substring(0, logisticsInvoiceBean.getDate_time_rec().toString().lastIndexOf(":")));
-    } else {
-        out.println("-");
-    }
+                                                    <%                                                        if (logisticsInvoiceBean.getDate_time_rec() != null && !"".equals(logisticsInvoiceBean.getDate_time_rec())) {
+                                                            out.println(logisticsInvoiceBean.getDate_time_rec().toString().substring(0, logisticsInvoiceBean.getDate_time_rec().toString().lastIndexOf(":")));
+                                                        } else {
+                                                            out.println("-");
+                                                        }
                                                     %>
 
                                                 </td>
 
-                                                <%if (logisticsInvoiceBean.getDirection().equalsIgnoreCase("INBOUND")) { %>
                                                 <td>
-
-                                                    <%
-                                                    } else {%><td style="background: none;"> <%}
-
-    if (logisticsInvoiceBean.getShipmentId() != null && !"".equals(logisticsInvoiceBean.getShipmentId())) {
-        out.println(logisticsInvoiceBean.getShipmentId());
-    } else {
-        out.println("-");
-    }
+                                                    <%                        if (logisticsInvoiceBean.getShipmentId() != null && !"".equals(logisticsInvoiceBean.getShipmentId())) {
+                                                            out.println(logisticsInvoiceBean.getShipmentId());
+                                                        } else {
+                                                            out.println("-");
+                                                        }
                                                     %>
                                                 </td>
 
@@ -608,79 +642,56 @@
                                              out.println(logisticsInvoiceBean.getPoNumber());
                                              %>
                                                  </td>--%>
-                                                <%if (logisticsInvoiceBean.getDirection().equalsIgnoreCase("INBOUND")) { %>
                                                 <td>
-
                                                     <%
-                                                    } else {%><td style="background: none;"> <%}
-    if (logisticsInvoiceBean.getItemQty() != null && !"".equals(logisticsInvoiceBean.getItemQty())) {
-        out.println(logisticsInvoiceBean.getItemQty());
-    } else {
-        out.println("-");
-    }
+                                                        if (logisticsInvoiceBean.getItemQty() != null && !"".equals(logisticsInvoiceBean.getItemQty())) {
+                                                            out.println(logisticsInvoiceBean.getItemQty());
+                                                        } else {
+                                                            out.println("-");
+                                                        }
                                                     %>
 
                                                 </td>
-                                                <%if (logisticsInvoiceBean.getDirection().equalsIgnoreCase("INBOUND")) { %>
                                                 <td>
-
                                                     <%
-                                                    } else {%><td style="background: none;"> <%}
-
-    if (logisticsInvoiceBean.getInvAmount() != null && !"".equals(logisticsInvoiceBean.getInvAmount())) {
-        out.println(logisticsInvoiceBean.getInvAmount());
-    } else {
-        out.println("-");
-    }
+                                                        if (logisticsInvoiceBean.getInvAmount() != null && !"".equals(logisticsInvoiceBean.getInvAmount())) {
+                                                            out.println(logisticsInvoiceBean.getInvAmount());
+                                                        } else {
+                                                            out.println("-");
+                                                        }
                                                     %>
 
                                                 </td>
-                                                <%if (logisticsInvoiceBean.getDirection().equalsIgnoreCase("INBOUND")) { %>
                                                 <td>
-
                                                     <%
-                                                    } else {%><td style="background: none;"> <%}
-
-    if (logisticsInvoiceBean.getInvDate() != null && !"".equals(logisticsInvoiceBean.getInvDate())) {
-        out.println(logisticsInvoiceBean.getInvDate());
-    } else {
-        out.println("-");
-    }
+                                                        if (logisticsInvoiceBean.getInvDate() != null && !"".equals(logisticsInvoiceBean.getInvDate())) {
+                                                            out.println(logisticsInvoiceBean.getInvDate());
+                                                        } else {
+                                                            out.println("-");
+                                                        }
                                                     %>
 
                                                 </td>
-                                                <%if (logisticsInvoiceBean.getDirection().equalsIgnoreCase("INBOUND")) { %>
                                                 <td>
-
                                                     <%
-                                                    } else {%><td style="background: none;"> <%}
-
-    // out.println(invoiceBean.getStatus());
-    if (logisticsInvoiceBean.getStatus() != null && !"".equals(logisticsInvoiceBean.getStatus())) {
-
-        if (logisticsInvoiceBean.getStatus().equalsIgnoreCase("SUCCESS")) {
-
-            out.println("<font color='green'>" + logisticsInvoiceBean.getStatus().toUpperCase() + "</font>");
-        } else if (logisticsInvoiceBean.getStatus().equalsIgnoreCase("ERROR")) {
-
-            if (logisticsInvoiceBean.getErrormsg() != null) {
-                if (logisticsInvoiceBean.getErrormsg().toLowerCase().contains(" sid ")) {
-
-                    out.println("<a  href='javascript:errorOverlay(" + logisticsInvoiceBean.getIdFiles() + ")'><font color='red'>" + logisticsInvoiceBean.getStatus() + "</font> </a>");
-                } else {
-
-                    out.println("<a href='javascript:errorOverlay(" + logisticsInvoiceBean.getIdFiles() + ")'><font color='orange'>" + logisticsInvoiceBean.getStatus() + "</font></a>");
-                }
-            } else {
-                out.println("--");
-            }
-        } else {
-
-            out.println("<font color='orange'>" + logisticsInvoiceBean.getStatus().toUpperCase() + "</font>");
-        }
-    } else {
-        out.println("-");
-    }
+                                                        // out.println(invoiceBean.getStatus());
+                                                        if (logisticsInvoiceBean.getStatus() != null && !"".equals(logisticsInvoiceBean.getStatus())) {
+                                                            if (logisticsInvoiceBean.getStatus().equalsIgnoreCase("SUCCESS")) {
+                                                                out.println("<font color='green'>" + logisticsInvoiceBean.getStatus().toUpperCase() + "</font>");
+                                                            } else if (logisticsInvoiceBean.getStatus().equalsIgnoreCase("ERROR")) {
+                                                                if (logisticsInvoiceBean.getErrormsg().toLowerCase().contains(" sid ")) {
+                                                                    //System.out.println("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk nnnnnnnnnnnnnnnnnnn");
+                                                                    out.println("<a  href='javascript:errorOverlay(" + logisticsInvoiceBean.getIdFiles() + ")'><font color='red'>" + logisticsInvoiceBean.getStatus() + "</font> </a>");
+                                                                } else {
+                                                                    //System.out.println("yellow");
+                                                                    out.println("<a href='javascript:errorOverlay(" + logisticsInvoiceBean.getIdFiles() + ")'><font color='orange'>" + logisticsInvoiceBean.getStatus() + "</font></a>");
+                                                                }
+                                                            } else {
+                                                                out.println("<font color='orange'>" + logisticsInvoiceBean.getStatus().toUpperCase() + "</font>");
+                                                            }
+                                                        } else {
+                                                            out.println("-");
+                                                        }
 
 
                                                     %>
@@ -690,7 +701,7 @@
 
 
                                             </tr>
-                                            <%                                                }
+                                            <%                                                    }
                                             %>
                                             </tbody><tr>
                                                 <td bgcolor="white" class="fieldLabelLeft" colspan="3" style="text-align: left; border: 0;">
