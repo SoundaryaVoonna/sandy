@@ -530,7 +530,21 @@ public class LogisticsDocServiceImpl implements LogisticsDocService {
 
                 String Direction = resultSet.getString("DIRECTION");
                 logisticsdocBean.setDirection(Direction);
-                logisticsdocBean.setDate_time_rec(resultSet.getTimestamp("DATE_TIME_RECEIVED"));
+                      
+                String x = resultSet.getTimestamp("DATE_TIME_RECEIVED").toString();
+                int hours=Integer.parseInt(x.substring(11, 13));
+                String Meridiem="AM";
+                if(hours>=12)
+                {
+                    if(hours>12)
+                    {
+                         hours=hours-12;
+                    }
+                    Meridiem="PM";
+                }
+                String dateTime = x.substring(5, 7) + "/" + x.substring(8, 10) + "/" + x.substring(0, 4) + " " +hours+ x.substring(13);
+                dateTime=dateTime.substring(0,dateTime.lastIndexOf("."))+" "+Meridiem;
+                logisticsdocBean.setDate_time_rec(dateTime);
                 logisticsdocBean.setStatus(resultSet.getString("STATUS"));
 
                 if (Direction.equalsIgnoreCase("INBOUND")) {
@@ -1108,7 +1122,22 @@ public class LogisticsDocServiceImpl implements LogisticsDocService {
 
                 String Direction = resultSet.getString("DIRECTION");
                 logisticsdocBean.setDirection(Direction);
-                logisticsdocBean.setDate_time_rec(resultSet.getTimestamp("DATE_TIME_RECEIVED"));
+                
+                String x = resultSet.getTimestamp("DATE_TIME_RECEIVED").toString();
+                int hours=Integer.parseInt(x.substring(11, 13));
+                String Meridiem="AM";
+                if(hours>=12)
+                {
+                    if(hours>12)
+                    {
+                         hours=hours-12;
+                    }
+                    Meridiem="PM";
+                }
+                String dateTime = x.substring(5, 7) + "/" + x.substring(8, 10) + "/" + x.substring(0, 4) + " " +hours+ x.substring(13);
+                dateTime=dateTime.substring(0,dateTime.lastIndexOf("."))+" "+Meridiem;
+                logisticsdocBean.setDate_time_rec(dateTime);
+                
                 logisticsdocBean.setStatus(resultSet.getString("STATUS"));
 
                 if (Direction.equalsIgnoreCase("INBOUND")) {

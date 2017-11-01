@@ -229,7 +229,22 @@ public class LtShipmentServiceImpl implements LtShipmentService {
 
                 ltShipmentBean = new LtShipmentBean();
                 ltShipmentBean.setInstanceId(resultSet.getString("FILE_ID"));
-                ltShipmentBean.setDateTime(resultSet.getTimestamp("DATE_TIME_RECEIVED"));
+                
+                 String x = resultSet.getTimestamp("DATE_TIME_RECEIVED").toString();
+                int hours=Integer.parseInt(x.substring(11, 13));
+                String Meridiem="AM";
+                if(hours>=12)
+                {
+                    if(hours>12)
+                    {
+                         hours=hours-12;
+                    }
+                    Meridiem="PM";
+                }
+                String dateTime = x.substring(5, 7) + "/" + x.substring(8, 10) + "/" + x.substring(0, 4) + " " +hours+ x.substring(13);
+                dateTime=dateTime.substring(0,dateTime.lastIndexOf("."))+" "+Meridiem;
+                ltShipmentBean.setDateTime(dateTime);
+                
                 ltShipmentBean.setAsnNum(resultSet.getString("SHIPMENT_ID"));
                 ltShipmentBean.setDirection(resultSet.getString("DIRECTION"));
                 //ltResponseBean.set(resultSet.getTimestamp("DATE_TIME_RECEIVED"));
@@ -467,7 +482,22 @@ public class LtShipmentServiceImpl implements LtShipmentService {
 
                 ltShipmentBean = new LtShipmentBean();
                 ltShipmentBean.setInstanceId(resultSet.getString("FILE_ID"));
-                ltShipmentBean.setDateTime(resultSet.getTimestamp("DATE_TIME_RECEIVED"));
+                
+                 String x = resultSet.getTimestamp("DATE_TIME_RECEIVED").toString();
+                int hours=Integer.parseInt(x.substring(11, 13));
+                String Meridiem="AM";
+                if(hours>=12)
+                {
+                    if(hours>12)
+                    {
+                         hours=hours-12;
+                    }
+                    Meridiem="PM";
+                }
+                String dateTime = x.substring(5, 7) + "/" + x.substring(8, 10) + "/" + x.substring(0, 4) + " " +hours+ x.substring(13);
+                dateTime=dateTime.substring(0,dateTime.lastIndexOf("."))+" "+Meridiem;
+                ltShipmentBean.setDateTime(dateTime);
+                
                 ltShipmentBean.setAsnNum(resultSet.getString("SHIPMENT_ID"));
                 ltShipmentBean.setDirection(resultSet.getString("DIRECTION"));
                 //ltResponseBean.set(resultSet.getTimestamp("DATE_TIME_RECEIVED"));

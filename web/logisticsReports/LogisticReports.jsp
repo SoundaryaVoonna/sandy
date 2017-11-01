@@ -493,7 +493,8 @@
 
 
                                                 <td>
-                                                    <%                                                            out.println(logisticsReportBean.getDate_time_rec().toString().substring(0, logisticsReportBean.getDate_time_rec().toString().lastIndexOf(":")));
+                                                    <%              
+                                                        out.println(logisticsReportBean.getDate_time_rec());
                                                     %>
 
                                                 </td>   

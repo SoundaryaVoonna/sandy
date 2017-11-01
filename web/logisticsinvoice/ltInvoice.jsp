@@ -620,7 +620,7 @@
                                                 </td>
                                                 <td>
                                                     <%                                                        if (logisticsInvoiceBean.getDate_time_rec() != null && !"".equals(logisticsInvoiceBean.getDate_time_rec())) {
-                                                            out.println(logisticsInvoiceBean.getDate_time_rec().toString().substring(0, logisticsInvoiceBean.getDate_time_rec().toString().lastIndexOf(":")));
+                                                            out.println(logisticsInvoiceBean.getDate_time_rec());
                                                         } else {
                                                             out.println("-");
                                                         }

@@ -55,19 +55,19 @@ public class LtResponseServiceImpl implements LtResponseService {
         String datepickerfrom = ltResponse.getDatepickerfrom();
         String senderId = "";
         if (ltResponse.getSenderId() != null && !"".equals(ltResponse.getSenderId().trim())) {
-        senderId = ltResponse.getSenderId();
+            senderId = ltResponse.getSenderId();
         }
         String senderName = "";
         if (ltResponse.getSenderName() != null && !"".equals(ltResponse.getSenderName().trim())) {
-        senderName = ltResponse.getSenderName();
+            senderName = ltResponse.getSenderName();
         }
         String receiverId = "";
         if (ltResponse.getReceiverId() != null && !"".equals(ltResponse.getReceiverId().trim())) {
-        receiverId = ltResponse.getReceiverId();
+            receiverId = ltResponse.getReceiverId();
         }
         String receiverName = "";
         if (ltResponse.getReceiverName() != null && !"".equals(ltResponse.getReceiverName().trim())) {
-        receiverName = ltResponse.getReceiverName();
+            receiverName = ltResponse.getReceiverName();
         }
         //String docIsa= logisticsDocAction.getDocIsa();
         String doctype = "";
@@ -121,7 +121,7 @@ public class LtResponseServiceImpl implements LtResponseService {
             }
         }
 
-                // For Invoice / Shipment / Cheque
+        // For Invoice / Shipment / Cheque
         //if(corrattribute1.equalsIgnoreCase("PO Number") || corrattribute1.equalsIgnoreCase("Invoice Number")  || corrattribute1.equalsIgnoreCase("Shipment Number") || corrattribute1.equalsIgnoreCase("Cheque Number") )
         if (corrattribute != null && corrattribute.equalsIgnoreCase("Shipment Number")) {
             if (corrvalue != null && !"".equals(corrvalue.trim())) {
@@ -137,7 +137,7 @@ public class LtResponseServiceImpl implements LtResponseService {
             }
         }
 
-                   //Instance Id 
+        //Instance Id 
         if (corrattribute != null && corrattribute.equalsIgnoreCase("Instance ID")) {
             if (corrvalue != null && !"".equals(corrvalue.trim())) {
                 ltResponseSearchQuery.append(WildCardSql.getWildCardSql1("FILES.FILE_ID",
@@ -196,7 +196,7 @@ public class LtResponseServiceImpl implements LtResponseService {
                     + "'");
         }
         ltResponseSearchQuery.append(" order by DATE_TIME_RECEIVED DESC ");
-                 // ltResponseSearchQuery.append(" order by DATE_TIME_RECEIVED DESC fetch first 50 rows only");        
+        // ltResponseSearchQuery.append(" order by DATE_TIME_RECEIVED DESC fetch first 50 rows only");        
         // documentSearchQuery.append(" WITH UR");
         System.out.println("Lt Response query-->" + ltResponseSearchQuery.toString());
         String searchQuery = ltResponseSearchQuery.toString();
@@ -219,12 +219,24 @@ public class LtResponseServiceImpl implements LtResponseService {
                 ltResponseBean.setIsaNum(resultSet.getString("ISA_NUMBER"));
                 ltResponseBean.setTransType(resultSet.getString("TRANSACTION_TYPE"));
                 ltResponseBean.setDirection(resultSet.getString("DIRECTION"));
-                ltResponseBean.setDate_time_rec(resultSet.getTimestamp("DATE_TIME_RECEIVED"));
+
+                String x = resultSet.getTimestamp("DATE_TIME_RECEIVED").toString();
+                int hours = Integer.parseInt(x.substring(11, 13));
+                String Meridiem = "AM";
+                if (hours >= 12) {
+                    if (hours > 12) {
+                        hours = hours - 12;
+                    }
+                    Meridiem = "PM";
+                }
+                String dateTime = x.substring(5, 7) + "/" + x.substring(8, 10) + "/" + x.substring(0, 4) + " " + hours + x.substring(13);
+                dateTime = dateTime.substring(0, dateTime.lastIndexOf(".")) + " " + Meridiem;
+                ltResponseBean.setDate_time_rec(dateTime);
                 ltResponseBean.setStatus(resultSet.getString("STATUS"));
-                if(resultSet.getString("DIRECTION").equalsIgnoreCase("INBOUND")){
+                if (resultSet.getString("DIRECTION").equalsIgnoreCase("INBOUND")) {
                     ltResponseBean.setPartnerName(resultSet.getString("SENDER_NAME"));
-                }   
-                if(resultSet.getString("DIRECTION").equalsIgnoreCase("OUTBOUND")){
+                }
+                if (resultSet.getString("DIRECTION").equalsIgnoreCase("OUTBOUND")) {
                     ltResponseBean.setPartnerName(resultSet.getString("RECEIVER_NAME"));
                 }
                 //ltResponseBean.setPartnerName(resultSet.getString("RECEIVER_NAME"));
@@ -269,6 +281,7 @@ public class LtResponseServiceImpl implements LtResponseService {
         // System.out.println("Length--->"+purchaseList.size());*/
         return ltResponseList;
     }
+
     public ArrayList<LtResponseBean> getLtResponseArchiveList(LtResponse ltResponse, HttpServletRequest httpServletRequest) throws ServiceLocatorException {
         StringBuffer ltResponseSearchQuery = new StringBuffer();
         logger.info("Entered into the :::: LtResponseServiceImpl :::: getLtResponseList");
@@ -277,19 +290,19 @@ public class LtResponseServiceImpl implements LtResponseService {
         String datepickerfrom = ltResponse.getDatepickerfrom();
         String senderId = "";
         if (ltResponse.getSenderId() != null && !"".equals(ltResponse.getSenderId().trim())) {
-        senderId = ltResponse.getSenderId();
+            senderId = ltResponse.getSenderId();
         }
         String senderName = "";
         if (ltResponse.getSenderName() != null && !"".equals(ltResponse.getSenderName().trim())) {
-        senderName = ltResponse.getSenderName();
+            senderName = ltResponse.getSenderName();
         }
         String receiverId = "";
         if (ltResponse.getReceiverId() != null && !"".equals(ltResponse.getReceiverId().trim())) {
-        receiverId = ltResponse.getReceiverId();
+            receiverId = ltResponse.getReceiverId();
         }
         String receiverName = "";
         if (ltResponse.getReceiverName() != null && !"".equals(ltResponse.getReceiverName().trim())) {
-        receiverName = ltResponse.getReceiverName();
+            receiverName = ltResponse.getReceiverName();
         }
         //String docIsa= logisticsDocAction.getDocIsa();
         String doctype = "";
@@ -343,7 +356,7 @@ public class LtResponseServiceImpl implements LtResponseService {
             }
         }
 
-                // For Invoice / Shipment / Cheque
+        // For Invoice / Shipment / Cheque
         //if(corrattribute1.equalsIgnoreCase("PO Number") || corrattribute1.equalsIgnoreCase("Invoice Number")  || corrattribute1.equalsIgnoreCase("Shipment Number") || corrattribute1.equalsIgnoreCase("Cheque Number") )
         if (corrattribute != null && corrattribute.equalsIgnoreCase("Shipment Number")) {
             if (corrvalue != null && !"".equals(corrvalue.trim())) {
@@ -359,7 +372,7 @@ public class LtResponseServiceImpl implements LtResponseService {
             }
         }
 
-                   //Instance Id 
+        //Instance Id 
         if (corrattribute != null && corrattribute.equalsIgnoreCase("Instance ID")) {
             if (corrvalue != null && !"".equals(corrvalue.trim())) {
                 ltResponseSearchQuery.append(WildCardSql.getWildCardSql1("ARCHIVE_FILES.FILE_ID",
@@ -418,7 +431,7 @@ public class LtResponseServiceImpl implements LtResponseService {
                     + "'");
         }
         ltResponseSearchQuery.append(" order by DATE_TIME_RECEIVED DESC ");
-                 // ltResponseSearchQuery.append(" order by DATE_TIME_RECEIVED DESC fetch first 50 rows only");        
+        // ltResponseSearchQuery.append(" order by DATE_TIME_RECEIVED DESC fetch first 50 rows only");        
         // documentSearchQuery.append(" WITH UR");
         System.out.println("Lt Response query-->" + ltResponseSearchQuery.toString());
         String searchQuery = ltResponseSearchQuery.toString();
@@ -441,12 +454,25 @@ public class LtResponseServiceImpl implements LtResponseService {
                 ltResponseBean.setIsaNum(resultSet.getString("ISA_NUMBER"));
                 ltResponseBean.setTransType(resultSet.getString("TRANSACTION_TYPE"));
                 ltResponseBean.setDirection(resultSet.getString("DIRECTION"));
-                ltResponseBean.setDate_time_rec(resultSet.getTimestamp("DATE_TIME_RECEIVED"));
+
+                String x = resultSet.getTimestamp("DATE_TIME_RECEIVED").toString();
+                int hours = Integer.parseInt(x.substring(11, 13));
+                String Meridiem = "AM";
+                if (hours >= 12) {
+                    if (hours > 12) {
+                        hours = hours - 12;
+                    }
+                    Meridiem = "PM";
+                }
+                String dateTime = x.substring(5, 7) + "/" + x.substring(8, 10) + "/" + x.substring(0, 4) + " " + hours + x.substring(13);
+                dateTime = dateTime.substring(0, dateTime.lastIndexOf(".")) + " " + Meridiem;
+                ltResponseBean.setDate_time_rec(dateTime);
+
                 ltResponseBean.setStatus(resultSet.getString("STATUS"));
-                if(resultSet.getString("DIRECTION").equalsIgnoreCase("INBOUND")){
+                if (resultSet.getString("DIRECTION").equalsIgnoreCase("INBOUND")) {
                     ltResponseBean.setPartnerName(resultSet.getString("SENDER_NAME"));
-                }   
-                if(resultSet.getString("DIRECTION").equalsIgnoreCase("OUTBOUND")){
+                }
+                if (resultSet.getString("DIRECTION").equalsIgnoreCase("OUTBOUND")) {
                     ltResponseBean.setPartnerName(resultSet.getString("RECEIVER_NAME"));
                 }
                 //ltResponseBean.setPartnerName(resultSet.getString("RECEIVER_NAME"));

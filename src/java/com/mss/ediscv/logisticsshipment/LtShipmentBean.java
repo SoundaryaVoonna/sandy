@@ -16,7 +16,7 @@ public class LtShipmentBean {
     private String instanceId;
     private String asnNum;
     private String direction;
-    private Timestamp dateTime;
+    private String dateTime;
     private String partner;
     private String status;
     private String ackStatus;
@@ -110,17 +110,14 @@ private String tmwReceivererid;
         this.direction = direction;
     }
 
-    /**
-     * @return the dateTime
-     */
-    public Timestamp getDateTime() {
+    public String getDateTime() {
         return dateTime;
     }
 
     /**
-     * @param dateTime the dateTime to set
+     * @return the dateTime
      */
-    public void setDateTime(Timestamp dateTime) {
+    public void setDateTime(String dateTime) { 
         this.dateTime = dateTime;
     }
 

@@ -691,7 +691,7 @@ else{%><tr style="background:none;background: beige;"><%}if(ltShipmentBean.getDi
                                                     <%
 }else{%><td style="background: none;"> <%}
                                                         //  out.println(shipmentBean.getDate_time_rec());
-                                                        out.println(ltShipmentBean.getDateTime().toString().substring(0, ltShipmentBean.getDateTime().toString().lastIndexOf(":")));
+                                                        out.println(ltShipmentBean.getDateTime());
                                                     %>
                                                 </td>
 

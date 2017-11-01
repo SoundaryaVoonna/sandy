@@ -126,7 +126,22 @@ public class PartnerServiceImpl implements PartnerService{
                    partnerBean.setCountryCode(resultSet.getString("STATE"));
                    partnerBean.setStatus(resultSet.getString("STATUS"));
                  //  partnerBean.setCreatedBy(resultSet.getString("CREATED_BY"));
-                   partnerBean.setCreatedDate(resultSet.getString("CREATED_TS"));
+                 
+                 String x = resultSet.getTimestamp("CREATED_TS").toString();
+                int hours=Integer.parseInt(x.substring(11, 13));
+                String Meridiem="AM";
+                if(hours>=12)
+                {
+                    if(hours>12)
+                    {
+                         hours=hours-12;
+                    }
+                    Meridiem="PM";
+                }
+                String dateTime = x.substring(5, 7) + "/" + x.substring(8, 10) + "/" + x.substring(0, 4) + " " +hours+ x.substring(13);
+                dateTime=dateTime.substring(0,dateTime.lastIndexOf("."))+" "+Meridiem;
+                partnerBean.setCreatedDate(dateTime);
+                
                    partnerBean.setChangedBy(resultSet.getString("MODIFIED_BY"));
                   partnerBean.setChangedDate(resultSet.getString("MODIFIED_TS"));
                   partnerList.add(partnerBean);

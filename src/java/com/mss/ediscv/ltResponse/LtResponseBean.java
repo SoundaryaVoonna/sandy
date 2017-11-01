@@ -34,7 +34,7 @@ public class LtResponseBean {
     private String refId;
     private String shipmentId;
     private String responseStatus;
-    private Timestamp date_time_rec;
+    private String date_time_rec;
     private String tmwSenderid;
 private String tmwReceivererid;
 
@@ -241,12 +241,14 @@ private String tmwReceivererid;
         this.shipmentId = shipmentId;
     }
 
-    public Timestamp getDate_time_rec() {
+    public String getDate_time_rec() {
         return date_time_rec;
     }
 
-    public void setDate_time_rec(Timestamp date_time_rec) {
+    public void setDate_time_rec(String date_time_rec) {
         this.date_time_rec = date_time_rec;
     }
+
+  
     
 }

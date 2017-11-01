@@ -739,7 +739,7 @@
                                                     %>
                                                 <td style="background: none;">
                                                     <%}
-                                                        out.println(logisticsDocBean.getDate_time_rec().toString().substring(0, logisticsDocBean.getDate_time_rec().toString().lastIndexOf(":")));
+                                                        out.println(logisticsDocBean.getDate_time_rec());
                                                     %>
 
                                                 </td>   

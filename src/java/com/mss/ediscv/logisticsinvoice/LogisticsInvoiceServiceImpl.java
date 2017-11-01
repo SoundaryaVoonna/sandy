@@ -249,7 +249,22 @@ public class LogisticsInvoiceServiceImpl implements LogisticsInvoiceService {
                 //logisticsInvoiceBean.setPartner(resultSet.getString("REC_NAME"));
                 logisticsInvoiceBean.setInvoiceNumber(resultSet.getString("INVOICE_NUMBER"));
                 logisticsInvoiceBean.setPoNumber(resultSet.getString("PO_NUMBER"));
-                logisticsInvoiceBean.setDate_time_rec(resultSet.getTimestamp("DATE_TIME_RECEIVED"));
+                
+                 String x = resultSet.getTimestamp("DATE_TIME_RECEIVED").toString();
+                int hours=Integer.parseInt(x.substring(11, 13));
+                String Meridiem="AM";
+                if(hours>=12)
+                {
+                    if(hours>12)
+                    {
+                         hours=hours-12;
+                    }
+                    Meridiem="PM";
+                }
+                String dateTime = x.substring(5, 7) + "/" + x.substring(8, 10) + "/" + x.substring(0, 4) + " " +hours+ x.substring(13);
+                dateTime=dateTime.substring(0,dateTime.lastIndexOf("."))+" "+Meridiem;
+                logisticsInvoiceBean.setDate_time_rec(dateTime);
+                
                 logisticsInvoiceBean.setItemQty(resultSet.getString("TOTAL_WEIGHT"));
                 logisticsInvoiceBean.setInvAmount(resultSet.getString("TOTAL_AMOUNT"));
                 logisticsInvoiceBean.setShipmentId(resultSet.getString("SHIPMENT_ID"));
@@ -500,7 +515,22 @@ public ArrayList<LogisticsInvoiceBean> buildLogInvoiceArchiveQuery(LogisticsInvo
                 //logisticsInvoiceBean.setPartner(resultSet.getString("REC_NAME"));
                 logisticsInvoiceBean.setInvoiceNumber(resultSet.getString("INVOICE_NUMBER"));
                 logisticsInvoiceBean.setPoNumber(resultSet.getString("PO_NUMBER"));
-                logisticsInvoiceBean.setDate_time_rec(resultSet.getTimestamp("DATE_TIME_RECEIVED"));
+                
+                  String x = resultSet.getTimestamp("DATE_TIME_RECEIVED").toString();
+                int hours=Integer.parseInt(x.substring(11, 13));
+                String Meridiem="AM";
+                if(hours>=12)
+                {
+                    if(hours>12)
+                    {
+                         hours=hours-12;
+                    }
+                    Meridiem="PM";
+                }
+                String dateTime = x.substring(5, 7) + "/" + x.substring(8, 10) + "/" + x.substring(0, 4) + " " +hours+ x.substring(13);
+                dateTime=dateTime.substring(0,dateTime.lastIndexOf("."))+" "+Meridiem;
+                logisticsInvoiceBean.setDate_time_rec(dateTime);
+                
                 logisticsInvoiceBean.setItemQty(resultSet.getString("TOTAL_WEIGHT"));
                 logisticsInvoiceBean.setInvAmount(resultSet.getString("TOTAL_AMOUNT"));
                 logisticsInvoiceBean.setShipmentId(resultSet.getString("SHIPMENT_ID"));

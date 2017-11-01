@@ -630,7 +630,7 @@ else{%><tr style="background:none;background: beige;"><%}if(ltResponseBean.getDi
                                                          <td>
                                                              
                                                     <%
-}else{%><td style="background: none;"> <%}                                                              out.println(ltResponseBean.getDate_time_rec().toString().substring(0, ltResponseBean.getDate_time_rec().toString().lastIndexOf(":")));
+}else{%><td style="background: none;"> <%}                                                              out.println(ltResponseBean.getDate_time_rec());
                                                     %>
 
                                                 </td>

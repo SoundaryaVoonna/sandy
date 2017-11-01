@@ -428,7 +428,22 @@ public class LogisticsLoadServiceImpl implements LogisticsLoadService {
                 logisticsdocBean.setIsa_number(resultSet.getString("isa_number"));
                 logisticsdocBean.setTransaction_type(resultSet.getString("tran_type"));
                 logisticsdocBean.setDirection(resultSet.getString("direction"));
-                logisticsdocBean.setDate_time_rec(resultSet.getTimestamp("datetime"));
+                
+                String x = resultSet.getTimestamp("datetime").toString();
+                int hours=Integer.parseInt(x.substring(11, 13));
+                String Meridiem="AM";
+                if(hours>=12)
+                {
+                    if(hours>12)
+                    {
+                         hours=hours-12;
+                    }
+                    Meridiem="PM";
+                }
+                String dateTime = x.substring(5, 7) + "/" + x.substring(8, 10) + "/" + x.substring(0, 4) + " " +hours+ x.substring(13);
+                dateTime=dateTime.substring(0,dateTime.lastIndexOf("."))+" "+Meridiem;
+                logisticsdocBean.setDate_time_rec(dateTime);
+                
                 logisticsdocBean.setStatus(resultSet.getString("status"));
                 logisticsdocBean.setTransactionPurpose(resultSet.getString("TRANSACTION_PURPOSE"));
                 if(resultSet.getString("direction").equalsIgnoreCase("INBOUND")){
@@ -905,7 +920,22 @@ public class LogisticsLoadServiceImpl implements LogisticsLoadService {
                 logisticsdocBean.setIsa_number(resultSet.getString("isa_number"));
                 logisticsdocBean.setTransaction_type(resultSet.getString("tran_type"));
                 logisticsdocBean.setDirection(resultSet.getString("direction"));
-                logisticsdocBean.setDate_time_rec(resultSet.getTimestamp("datetime"));
+                
+                String x = resultSet.getTimestamp("datetime").toString();
+                int hours=Integer.parseInt(x.substring(11, 13));
+                String Meridiem="AM";
+                if(hours>=12)
+                {
+                    if(hours>12)
+                    {
+                         hours=hours-12;
+                    }
+                    Meridiem="PM";
+                }
+                String dateTime = x.substring(5, 7) + "/" + x.substring(8, 10) + "/" + x.substring(0, 4) + " " +hours+ x.substring(13);
+                dateTime=dateTime.substring(0,dateTime.lastIndexOf("."))+" "+Meridiem;
+                logisticsdocBean.setDate_time_rec(dateTime);
+                
                 logisticsdocBean.setStatus(resultSet.getString("status"));
                 logisticsdocBean.setTransactionPurpose(resultSet.getString("TRANSACTION_PURPOSE"));
                 if(resultSet.getString("direction").equalsIgnoreCase("INBOUND")){

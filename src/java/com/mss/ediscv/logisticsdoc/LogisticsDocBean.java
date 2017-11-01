@@ -19,7 +19,7 @@ private String file_type;
 private String isa_number;
 private String transaction_type;
 private String direction;
-private Timestamp date_time_rec;
+private String date_time_rec;
 private String status;
 private String pname;
 private String poNumber;
@@ -169,19 +169,14 @@ private String shipmentNum;
         this.direction = direction;
     }
 
-    /**
-     * @return the date_time_rec
-     */
-    public Timestamp getDate_time_rec() {
+    public String getDate_time_rec() {
         return date_time_rec;
     }
 
-    /**
-     * @param date_time_rec the date_time_rec to set
-     */
-    public void setDate_time_rec(Timestamp date_time_rec) {
+    public void setDate_time_rec(String date_time_rec) {
         this.date_time_rec = date_time_rec;
     }
+
 
     /**
      * @return the status

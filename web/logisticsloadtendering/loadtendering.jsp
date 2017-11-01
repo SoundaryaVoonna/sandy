@@ -654,7 +654,7 @@ else{%><tr style="background:none;background: beige;"><%}if(logisticsLoadBean.ge
                                                     <td style="background: none;">
                                                     <%}
                                  
-                                                        out.println(logisticsLoadBean.getDate_time_rec().toString().substring(0, logisticsLoadBean.getDate_time_rec().toString().lastIndexOf(":")));
+                                                        out.println(logisticsLoadBean.getDate_time_rec());
                                                     %>
 
                                                 </td>  
