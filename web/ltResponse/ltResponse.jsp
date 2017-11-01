@@ -376,8 +376,8 @@
                                 <table >
                                     <tbody >
                                         <s:form action="../ltResponse/doSearchltResponse.action" method="post" name="ltResponseForm" id="ltResponseForm" theme="simple">
-                                           <tr><td><label>Database&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;</label>
-                                                        <s:radio cssClass="myRadio" id="database" name="database" value="%{database}" list="#@java.util.LinkedHashMap@{'MSCVP':'LIVE','ARCHIVE':'ARCHIVE'}"/></td></tr>
+                                            <tr><td><label>Database&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;</label></td>
+                                                <td>  <s:radio cssClass="myRadio" id="database" name="database" value="%{database}" list="#@java.util.LinkedHashMap@{'MSCVP':'LIVE','ARCHIVE':'ARCHIVE'}"/></td></tr>
                                             <tr>
                                                 <td class="lableLeft"><s:label value="Date From"/> </td>
                                                 <td><%-- <input type="text" id="datepickerfrom" /> --%>

@@ -363,8 +363,8 @@
                                 <table >
                                     <tbody >
                                         <s:form action="../logisticsinvoice/invoiceSearch.action" method="post" name="logisticsForm" id="logisticsForm" theme="simple">
-                                          <tr><td><label>Database&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;</label>
-                                                        <s:radio cssClass="myRadio" id="database" name="database" value="%{database}" list="#@java.util.LinkedHashMap@{'MSCVP':'LIVE','ARCHIVE':'ARCHIVE'}"/></td></tr>
+                                            <tr><td><label>Database&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;</label></td>
+                                                <td> <s:radio cssClass="myRadio" id="database" name="database" value="%{database}" list="#@java.util.LinkedHashMap@{'MSCVP':'LIVE','ARCHIVE':'ARCHIVE'}"/></td></tr>
 
 
                                             <tr>
