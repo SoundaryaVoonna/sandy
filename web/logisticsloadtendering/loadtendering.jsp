@@ -107,8 +107,8 @@
 
             }
 
-           function getDetails(val, ponum,id) {
-                //  alert("hiiii");    
+           function getDetails(number, ponum,id) {
+                   
                 //var db = document.forms["purchaseForm"]["database"].value;
                 var form = document.forms['logisticsForm'];
                 var radios = form.elements["database"];
@@ -118,7 +118,8 @@
                         db = radios[i].value;
                     }
                 }
-                getDocDetails(val, ponum,id,db);
+//                alert(db);
+               getLoadTenderingDetails(number, ponum,id,db);
             }
             function checkCorrelation() {
 
@@ -622,7 +623,7 @@ else{%><tr style="background:none;background: beige;"><%}if(logisticsLoadBean.ge
                                                     <%}else{%>
                                                     <td style="background: none;">
                                                     <%}%>
-                                       <a href="javascript:getLoadTenderingDetails('<%=logisticsLoadBean.getFile_id()%>','<%=logisticsLoadBean.getShipmentId()%>','<%=logisticsLoadBean.getId()%>');">
+                                       <a href="javascript:getDetails('<%=logisticsLoadBean.getFile_id()%>','<%=logisticsLoadBean.getShipmentId()%>','<%=logisticsLoadBean.getId()%>');">
 
                                                         <%
                                                             if (logisticsLoadBean.getShipmentId() != null) {

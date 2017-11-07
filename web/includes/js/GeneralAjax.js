@@ -2147,13 +2147,13 @@ function populateLogisticsDocDetails(responseXML)
    });*/
  
 }
-function getLoadTenderingDetails(number,ponum,id){
+function getLoadTenderingDetails(number,ponum,id,db){
     // ponum = shipmentId
     
     var num=number;
     var ponum = ponum;
     var id = id;
-   // alert('id'+id);
+    
     $(function() {
        
            $('#detail_box').show();
@@ -2162,7 +2162,7 @@ function getLoadTenderingDetails(number,ponum,id){
    });
    var req = getXMLHttpRequest();
    req.onreadystatechange = readyStateHandlerText(req,populateLoadTenderingDetails); 
-   var url="../ajax/getLoadTenderingDetails.action?isaNumber="+num+"&poNumber="+ponum+"&id="+id;
+   var url="../ajax/getLoadTenderingDetails.action?isaNumber="+num+"&poNumber="+ponum+"&id="+id+"&database="+db;
     req.open("GET",url,"true");
     req.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
     req.send(null);

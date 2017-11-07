@@ -279,8 +279,6 @@ public class LogisticReportsServiceImpl implements LogisticReportsService {
         // System.out.println("Length--->"+purchaseList.size());
         return documentList;
     }
-
-    @Override
  public ArrayList<LogisticReportsBean> getDocumentArchiveList(LogisticReportsAction logisticreportsAction, String roleId, HttpSession hsession, HttpServletRequest httpServletRequest) throws ServiceLocatorException {
         StringBuffer documentSearchQuery = new StringBuffer();
         logger.info("Entered into the :::: ReportsServiceImpl :::: getDocumentList");
@@ -437,7 +435,7 @@ public class LogisticReportsServiceImpl implements LogisticReportsService {
                 String dateTime = x.substring(5, 7) + "/" + x.substring(8, 10) + "/" + x.substring(0, 4) + " " +hours+ x.substring(13);
                 dateTime=dateTime.substring(0,dateTime.lastIndexOf("."))+" "+Meridiem;
                 logisticsreportBean.setDate_time_rec(dateTime);
-
+                
                 logisticsreportBean.setStatus(resultSet.getString("STATUS"));
 
                 if (Direction.equalsIgnoreCase("INBOUND")) {
@@ -513,4 +511,7 @@ public class LogisticReportsServiceImpl implements LogisticReportsService {
         // System.out.println("Length--->"+purchaseList.size());
         return documentList;
     }
+   
+ 
+    
 }

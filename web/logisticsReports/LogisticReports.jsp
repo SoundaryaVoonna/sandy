@@ -300,7 +300,7 @@
                                     <tbody >
                                         <s:form action="../logisticsReports/logisticreportsSearch.action" method="post" name="documentForm" id="documentForm" theme="simple">
                                             <tr><td><label>Database&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;</label></td>
-                                                <td>  <s:radio cssClass="myRadio" id="database" name="database" value="%{database}" list="#@java.util.LinkedHashMap@{'MSCVP':'LIVE','ARCHIVE':'ARCHIVE'}"/></td></tr>
+                                                <td>  <s:radio cssClass="myRadio" id="database" name="database" value="%{database}" list="#@java.util.LinkedHashMap@{'MSCVP':'Live','ARCHIVE':'Archive'}"/></td></tr>
                                             <tr>
                                                 <td class="lableLeft">Date From </td>
                                                 <td><%-- <input type="text" id="datepickerfrom" /> --%>
