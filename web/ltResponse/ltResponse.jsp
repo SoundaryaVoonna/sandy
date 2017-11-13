@@ -524,6 +524,7 @@
                                             <thead><tr>
                                                 <th >FileFormat</th> 
                                                 <th >InstanceId</th>
+                                                 <th>Customer/Carrier</th>
                                                 <th >RCT Order#</th>
                                                 <th>DateTime</th>
                                                 <th >Shipment</th>
@@ -531,7 +532,7 @@
                                                 <th >Direction</th>
                                                 <th >Status</th>
                                                 <th>Response Status</th>
-                                                <th>Customer/Carrier</th>
+                                               
 
                                             </tr></thead><tbody>
 
@@ -608,6 +609,18 @@ else{%><tr style="background:none;background: beige;"><%}if(ltResponseBean.getDi
                                                     %>
 
                                                 </td>
+                                                  <%if(ltResponseBean.getDirection().equalsIgnoreCase("INBOUND")){ %>
+                                                         <td>
+                                                             
+                                                    <%
+}else{%><td style="background: none;"> <%}                                                          if (ltResponseBean.getPartnerName() != null) {
+                                                            out.println(ltResponseBean.getPartnerName());
+                                                        } else {
+                                                            out.println("-");
+                                                        }
+                                                    %>
+
+                                                </td> 
 
                                                 <%if(ltResponseBean.getDirection().equalsIgnoreCase("INBOUND")){ %>
                                                          <td>
@@ -725,18 +738,7 @@ else{%><tr style="background:none;background: beige;"><%}if(ltResponseBean.getDi
 
                                                 </td> 
 
-                                               <%if(ltResponseBean.getDirection().equalsIgnoreCase("INBOUND")){ %>
-                                                         <td>
-                                                             
-                                                    <%
-}else{%><td style="background: none;"> <%}                                                          if (ltResponseBean.getPartnerName() != null) {
-                                                            out.println(ltResponseBean.getPartnerName());
-                                                        } else {
-                                                            out.println("-");
-                                                        }
-                                                    %>
-
-                                                </td> 
+                                             
                                             </tr>
                                             <%
                                                 }

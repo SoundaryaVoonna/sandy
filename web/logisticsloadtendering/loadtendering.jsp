@@ -539,8 +539,9 @@
                                             <tr>
                                                 <th >FileFormat</th> 
                                                 <th >InstanceID</th>
+                                                 <th >Customer/Carrier</th>
                                                 <th >Shipment</th>
-                                                <th >Customer/Carrier</th>
+                                               
                                                 <th >DateTime</th>
                                                 <th >Direction</th>
                                                 <th >Status</th>
@@ -615,7 +616,18 @@ else{%><tr style="background:none;background: beige;"><%}if(logisticsLoadBean.ge
                                                         out.println(logisticsLoadBean.getFile_id());
                                                     %>
 
+                                                </td>   <%if(logisticsLoadBean.getDirection().equalsIgnoreCase("Outbound")){ %>
+                                                
+                                                <td>
+                                                    <%}else{%>
+                                                    <td style="background: none;">
+                                                    <%}
+                                 
+                                                                                                            out.println(logisticsLoadBean.getPname());
+                                                    %>
+
                                                 </td>
+                                                
 
                                           <%if(logisticsLoadBean.getDirection().equalsIgnoreCase("Outbound")){ %>
                                                 
@@ -636,17 +648,7 @@ else{%><tr style="background:none;background: beige;"><%}if(logisticsLoadBean.ge
                                                         %>
                                                     </a>   
                                                 </td>
-                                                <%if(logisticsLoadBean.getDirection().equalsIgnoreCase("Outbound")){ %>
-                                                
-                                                <td>
-                                                    <%}else{%>
-                                                    <td style="background: none;">
-                                                    <%}
-                                 
-                                                                                                            out.println(logisticsLoadBean.getPname());
-                                                    %>
-
-                                                </td>
+                                             
 
 <%if(logisticsLoadBean.getDirection().equalsIgnoreCase("Outbound")){ %>
                                                 

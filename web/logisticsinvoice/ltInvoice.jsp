@@ -516,8 +516,9 @@
                                             <thead>       <tr>
                                                     <!--<td >I</td>-->  
                                                     <th >Instance&nbsp;Id</th>
-                                                    <th >Customer/Carrier</th>
+                                                   
                                                     <th style="width: 83px;">Invoice#</th>
+                                                     <th >Customer/Carrier</th>
                                                     <th>DateTime</th>
                                                     <th >Shipment</th>
                                                     <th >Item&nbsp;Qty</th>
@@ -597,15 +598,7 @@
                                                         }
                                                     %>
                                                 </td>
-                                                <td>
-                                                    <% //logisticsDocBean.getStatus() != null && !"".equals(logisticsDocBean.getStatus())
-                                                        if (logisticsInvoiceBean.getPartner() != null && !"".equals(logisticsInvoiceBean.getPartner())) {
-                                                            out.println(logisticsInvoiceBean.getPartner());
-                                                        } else {
-                                                            out.println("-");
-                                                        }
-                                                    %>
-                                                </td>
+                                               
                                                 <td >  <a href="javascript:getDetails('<%=logisticsInvoiceBean.getInvoiceNumber()%>','<%=logisticsInvoiceBean.getId()%>');"  >
                                                         <%
                                                             if (logisticsInvoiceBean.getInvoiceNumber() != null && !"".equals(logisticsInvoiceBean.getInvoiceNumber())) {
@@ -617,6 +610,15 @@
 
                                                         %>
                                                     </a>
+                                                </td>
+                                                 <td>
+                                                    <% //logisticsDocBean.getStatus() != null && !"".equals(logisticsDocBean.getStatus())
+                                                        if (logisticsInvoiceBean.getPartner() != null && !"".equals(logisticsInvoiceBean.getPartner())) {
+                                                            out.println(logisticsInvoiceBean.getPartner());
+                                                        } else {
+                                                            out.println("-");
+                                                        }
+                                                    %>
                                                 </td>
                                                 <td>
                                                     <%                                                        if (logisticsInvoiceBean.getDate_time_rec() != null && !"".equals(logisticsInvoiceBean.getDate_time_rec())) {

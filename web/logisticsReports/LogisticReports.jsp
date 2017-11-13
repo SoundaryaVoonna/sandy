@@ -412,8 +412,9 @@
                                            <thead> <tr>
                                                 <th >FileFormat</th> 
                                                 <th >InstanceId</th>
-                                                <th >Customer/Carrier</th>
+                                               <th >Customer/Carrier</th>
                                                 <th >DateTime</th>
+                                                 
                                                 <th >TransType</th>
                                                 <th >Direction</th>
                                                 <th >Status</th>
